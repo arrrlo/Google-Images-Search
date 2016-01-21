@@ -7,15 +7,18 @@ Ok, here's the thing, you want to fetch one image from Google Images and you wan
 
 This code enables you to do that.<br /><br />
 
-Except there's three things you need to do before using this peace of code in your project:<br /><br />
+Except there's four things you need to do before using this peace of code in your project:<br /><br />
 
-1. Install dependencies<br />
-2. Edit settings.py<br />
-3. Define search parameters and image path
+1. Setup your Google developers account and project<br />
+2. Install dependencies<br />
+3. Edit settings.py<br />
+4. Define search parameters and image path
 
 </p>
 
 <p>
+
+<h2>1. Setup your Google developers account and project</h2>
 
 <h2>1. Install dependencies</h2>
 <code>pip install Pillow</code><br />
