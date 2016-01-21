@@ -20,16 +20,16 @@ Except there's four things you need to do before using this peace of code in you
 
 <h2>1. Setup your Google developers account and project</h2>
 
-<h2>1. Install dependencies</h2>
+<h2>2. Install dependencies</h2>
 <code>pip install Pillow</code><br />
 <code>pip install requests</code><br />
 <code>pip install python-resize-image</code><br />
 <code>pip install google-api-python-client</code>
 
-<h2>2. Edit settings.py</h2>
+<h2>3. Edit settings.py</h2>
 
 
-<h2>3. Define search parameters and image</h2>
+<h2>4. Define search parameters and image</h2>
 
 
 </p>
