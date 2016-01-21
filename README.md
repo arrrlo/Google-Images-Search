@@ -27,7 +27,7 @@ https://cse.google.com/cse/all<br />
 <code>pip install google-api-python-client</code>
 
 <h2>3. Edit settings.py</h2>
-Replace "_enter_your_api_key_here_" with your API key:<br />
+<p>Replace "__enter_your_api_key_here__" with your API key:</p>
 ```python
 GOOGLE_API_DEVELOPER_KEY = '__enter_your_api_key_here__'
 ```
