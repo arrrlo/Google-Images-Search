@@ -19,6 +19,11 @@ Except there's four things you need to do before using this peace of code in you
 <p>
 
 <h2>1. Setup your Google developers account and project</h2>
+Create your developers acount and create your new project:<br />
+https://console.developers.google.com/home/dashboard?project=netflix-categories<br /><br />
+
+Create custom search engine (ID of engine is used as "cx" parameter in code):<br />
+https://cse.google.com/cse/all
 
 <h2>2. Install dependencies</h2>
 <code>pip install Pillow</code><br />
