@@ -1,7 +1,4 @@
-
 <h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
-
-<p>
 
 Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle.<br /><br />
 
@@ -13,10 +10,6 @@ Except there's four things you need to do before using this peace of code in you
 2. Install dependencies<br />
 3. Edit settings.py<br />
 4. Define search parameters and image path
-
-</p>
-
-<p>
 
 <h2>1. Setup your Google developers account and project</h2>
 Create your developers acount and create your new project:<br />
@@ -34,22 +27,29 @@ https://cse.google.com/cse/all<br />
 <code>pip install google-api-python-client</code>
 
 <h2>3. Edit settings.py</h2>
-Save your developers key for your project in this variable:<br />
-<code>GOOGLE_API_DEVELOPER_KEY</code><br /><br />
+Replace "__enter_your_api_key_here__" with your API key:<br />
+```python
+GOOGLE_API_DEVELOPER_KEY = '__enter_your_api_key_here__'
+```
 
-Save ID of the custom search engine in this variable:<br />
-<code>GOOGLE_API_CUSTOM_SEARCH_CX</code><br /><br />
+Replace "__enter_your_cx_here__" with your cx:<br />
+```python
+GOOGLE_API_CUSTOM_SEARCH_CX = '__enter_your_cx_here__'
+```
 
-Define path where you want the image to be saved in this variable:<br />
-<code>IMAGE_PATH</code><br /><br />
+Define path where your new image will be saved:<br />
+```python
+IMAGE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'images', '%s')
+```
 
-Define x, y size of your new saved image in this variable:<br />
-<code>IMAGE_SIZE</code>
+Define image size:<br />
+```python
+IMAGE_SIZE = [260, 260]
+```
 
 <h2>4. Define search parameters and image</h2>
-In run.py define search parameters and image file name. You can find detailed description of search parameters in google_api.py
-
-</p>
+In run.py replace "__my_search_query__" with desired search term, replace "__my_image__.jpg" with desired name of the image, and define other search parameters as you like.<br />
+You can find detailed description of search parameters in google_api.py<br />
 ```python
 search_params = {
     'q': '__my_search_query__',
