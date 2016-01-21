@@ -48,7 +48,7 @@ class GoogleCustomSearch:
                 search_params[param] = kwargs[param]
         return search_params
 
-    def photo_from_google_image(self, **kwargs):
+    def photo_from_google_images(self, **kwargs):
         search_params = self.set_search_params(**kwargs)
 
         try:
