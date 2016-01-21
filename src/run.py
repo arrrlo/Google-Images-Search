@@ -17,7 +17,7 @@ if __name__ == '__main__':
         'searchType': 'image',
         'imgDominantColor': 'black' 
     }
-    path_to_image = settings.IMAGE_PATH[0] % '__my_image__.jpg'
+    path_to_image = settings.IMAGE_PATH % '__my_image__.jpg'
     
     success, fail = FetchResizeSave(search_params=search_params, path_to_image=path_to_image).run()
 
