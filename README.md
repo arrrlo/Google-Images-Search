@@ -20,7 +20,7 @@ Except there's four things you need to do before using this peace of code in you
 
 <h2>1. Setup your Google developers account and project</h2>
 Create your developers acount and create your new project:<br />
-https://console.developers.google.com/home/dashboard?project=netflix-categories<br /><br />
+https://console.developers.google.com<br /><br />
 
 Create custom search engine (ID of engine is used as "cx" parameter in code):<br />
 https://cse.google.com/cse/all
