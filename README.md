@@ -1,5 +1,5 @@
 
-<h1>Search for image using Google Custom Search API and resize & crop the image afterwords</h1>
+<h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
 
 <p>
 
