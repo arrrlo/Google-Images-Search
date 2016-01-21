@@ -48,8 +48,8 @@ IMAGE_SIZE = [260, 260]
 ```
 
 <h2>4. Define search parameters and image path</h2>
-In run.py replace "__my_search_query__" with desired search term, replace "__my_image__.jpg" with desired name of the image, and define other search parameters as you like.<br />
-You can find detailed description of search parameters in google_api.py<br />
+<p>In run.py replace "__my_search_query__" with desired search term, replace "__my_image__.jpg" with desired name of the image, and define other search parameters as you like.<br />
+You can find detailed description of search parameters in google_api.py</p>
 ```python
 search_params = {
     'q': '__my_search_query__',
