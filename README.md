@@ -17,7 +17,7 @@ Except there's three things you need to do before using this peace of code in yo
 
 <p>
 
-<h5>1. Install dependencies</h5>
+<h2>1. Install dependencies</h2>
 
 
 <strong>2. Edit settings.py</strong><br /><br />
