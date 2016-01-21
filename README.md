@@ -61,5 +61,5 @@ search_params = {
     'searchType': 'image',
     'imgDominantColor': 'black'
 }
-path_to_image = settings.IMAGE_PATH[0] % '__my_image__.jpg'
+path_to_image = settings.IMAGE_PATH % '__my_image__.jpg'
 ```
