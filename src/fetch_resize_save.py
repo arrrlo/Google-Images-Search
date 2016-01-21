@@ -19,11 +19,8 @@ class FetchResizeSave:
         self.path_to_image = path_to_image
         self.google_custom_search = GoogleCustomSearch()
 
-    def fetch_image_from_google(self):
-        return self.google_custom_search.photo_from_google_images(**self.search_params)
-
     def run(self):
-        image_from_google, google_exception = self.fetch_image_from_google()
+        image_from_google, google_exception = self.google_custom_search.photo_from_google_images(**self.search_params)
 
         if not image_from_google:
             return False, google_exception
