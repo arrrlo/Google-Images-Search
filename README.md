@@ -32,17 +32,17 @@ https://cse.google.com/cse/all<br />
 GOOGLE_API_DEVELOPER_KEY = '__enter_your_api_key_here__'
 ```
 
-Replace "__enter_your_cx_here__" with your cx:<br />
+<p>Replace "__enter_your_cx_here__" with your cx:</p>
 ```python
 GOOGLE_API_CUSTOM_SEARCH_CX = '__enter_your_cx_here__'
 ```
 
-Define path where your new image will be saved:<br />
+<p>Define path where your new image will be saved:</p>
 ```python
 IMAGE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'images', '%s')
 ```
 
-Define image size:<br />
+<p>Define image size:</p>
 ```python
 IMAGE_SIZE = [260, 260]
 ```
