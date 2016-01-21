@@ -47,8 +47,10 @@ Define x, y size of your new saved image in this variable:<br />
 <code>IMAGE_SIZE</code>
 
 <h2>4. Define search parameters and image</h2>
-In run.py define search parameters and image file name. You can find detailed description of search parameters in google_api.py<br />
-```
+In run.py define search parameters and image file name. You can find detailed description of search parameters in google_api.py
+
+</p>
+```python
 search_params = {
     'q': '__my_search_query__',
     'num': 5,
@@ -61,5 +63,3 @@ search_params = {
 }
 path_to_image = settings.IMAGE_PATH[0] % '__my_image__.jpg'
 ```
-
-</p>
