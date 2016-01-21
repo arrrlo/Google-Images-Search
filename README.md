@@ -11,19 +11,19 @@ Except there's three things you need to do before using this peace of code in yo
 
 1. Install dependencies<br />
 2. Edit settings.py<br />
-3. Define search parameters and image path in your OS
+3. Define search parameters and image path
 
 </p>
 
 <p>
 
 <h2>1. Install dependencies</h2>
-
+<code>pip install requests</code>
 
 <h2>2. Edit settings.py</h2>
 
 
-<h2>3. Define search parameters and image path in your OS</h2>
+<h2>3. Define search parameters and image</h2>
 
 
 </p>
