@@ -18,9 +18,9 @@ Except there's three things you need to do before using this peace of code in yo
 <p>
 
 <h2>1. Install dependencies</h2>
-<code>pip install Pillow</code>
-<code>pip install requests</code>
-<code>pip install python-resize-image</code>
+<code>pip install Pillow</code><br />
+<code>pip install requests</code><br />
+<code>pip install python-resize-image</code><br />
 <code>pip install google-api-python-client</code>
 
 <h2>2. Edit settings.py</h2>
