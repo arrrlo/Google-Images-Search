@@ -23,7 +23,8 @@ Create your developers acount and create your new project:<br />
 https://console.developers.google.com<br /><br />
 
 Create custom search engine (ID of engine is used as "cx" parameter in code):<br />
-https://cse.google.com/cse/all
+https://cse.google.com/cse/all<br />
+(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
 
 <h2>2. Install dependencies</h2>
 <code>pip install Pillow</code><br />
