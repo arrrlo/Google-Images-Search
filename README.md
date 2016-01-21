@@ -20,10 +20,10 @@ Except there's three things you need to do before using this peace of code in yo
 <h2>1. Install dependencies</h2>
 
 
-<strong>2. Edit settings.py</strong><br /><br />
+<h2>2. Edit settings.py</h2>
 
 
-<strong>3. Define search parameters and image path in your OS</strong><br /><br />
+<h2>3. Define search parameters and image path in your OS</h2>
 
 
 </p>
