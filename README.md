@@ -14,3 +14,16 @@ Except there's three things you need to do before using this peace of code in yo
 3. Define search parameters and image path in your OS
 
 </p>
+
+<p>
+
+<strong>1. Install dependencies</strong><br /><br />
+
+
+<strong>2. Edit settings.py</strong><br /><br />
+
+
+<strong>3. Define search parameters and image path in your OS</strong><br /><br />
+
+
+</p>
