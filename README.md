@@ -1,10 +1,10 @@
 <h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
 
-Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle.<br /><br />
+Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle.<br />
 
-This code enables you to do that.<br /><br />
+This code enables you to do that.<br />
 
-Except there's four things you need to do before using this peace of code in your project:<br /><br />
+Except there's four things you need to do before using this peace of code in your project:<br />
 
 1. Setup your Google developers account and project<br />
 2. Install dependencies<br />
