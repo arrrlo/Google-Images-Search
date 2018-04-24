@@ -28,21 +28,25 @@ https://cse.google.com/cse/all<br />
 
 <h2>3. Edit settings.py</h2>
 <p>Replace "__enter_your_api_key_here__" with your API key:</p>
+
 ```python
 GOOGLE_API_DEVELOPER_KEY = '__enter_your_api_key_here__'
 ```
 
 <p>Replace "__enter_your_cx_here__" with your cx:</p>
+
 ```python
 GOOGLE_API_CUSTOM_SEARCH_CX = '__enter_your_cx_here__'
 ```
 
 <p>Define path where your new image will be saved:</p>
+
 ```python
 IMAGE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'images', '%s')
 ```
 
 <p>Define image size:</p>
+
 ```python
 IMAGE_SIZE = [260, 260]
 ```
@@ -50,6 +54,7 @@ IMAGE_SIZE = [260, 260]
 <h2>4. Define search parameters and image path</h2>
 <p>In run.py replace "__my_search_query__" with desired search term, replace "__my_image__.jpg" with desired name of the image, and define other search parameters as you like.<br />
 You can find detailed description of search parameters in google_api.py</p>
+
 ```python
 search_params = {
     'q': '__my_search_query__',
