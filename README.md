@@ -1,4 +1,4 @@
-<h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
+<!-- h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
 
 Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle.<br />
 
@@ -68,3 +68,4 @@ search_params = {
 }
 path_to_image = settings.IMAGE_PATH % '__my_image__.jpg'
 ```
+</-->
