@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='Google Images Search',
-    version="0.1.0",
+    version="0.1.1",
 
     description='Search for image using Google Custom Search API and resize & crop the image afterwords',
     long_description=readme(),
@@ -32,6 +32,9 @@ setup(
 
     packages=['google_images_search'],
     install_requires=[
+        'colorama~=0.3',
+        'pyfiglet~=0.7.5',
+        'termcolor~=1.1.0',
         'click==6.3',
         'six~=1.11.0',
         'requests~=2.18.4',

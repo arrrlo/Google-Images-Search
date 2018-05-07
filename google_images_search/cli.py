@@ -1,8 +1,11 @@
 import os
 import six
 import click
+from termcolor import cprint
+from pyfiglet import figlet_format
 
 from .fetch_resize_save import FetchResizeSave
+from .google_api import GoogleBackendException
 
 
 @click.group()
@@ -50,11 +53,32 @@ def search(ctx, query, num, safe, filetype, imagetype,
         'fileType': filetype,
         'imgType': imagetype,
         'imgSize': imagesize,
-        'searchType': 'image',
         'imgDominantColor': dominantcolor
     }
 
-    ctx.obj['object'].search(search_params, download_path, width, height)
+    click.clear()
 
-    for image in ctx.obj['object'].results():
-        print(image)
+    cprint(figlet_format('Google Images Search', width=120), 'red')
+    click.secho(' '*80 + 'by Ivan Arar', fg='red')
+
+    click.echo('-'*120)
+
+    try:
+        ctx.obj['object'].search(search_params, download_path, width, height)
+
+        for i, image in enumerate(ctx.obj['object'].results()):
+            click.echo(image.url)
+            if image.path:
+                click.secho(image.path, fg='blue')
+                if not image.resized:
+                    click.secho('[image is not resized]', fg='red')
+            else:
+                click.secho('[image is not download]', fg='red')
+            click.echo()
+
+    except GoogleBackendException:
+        click.secho('Error occured trying to fetch images from Google. Please try again.', fg='red')
+        return
+
+    click.echo('-'*120)
+    click.echo()

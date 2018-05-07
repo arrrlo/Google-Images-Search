@@ -1,71 +1,90 @@
-<!-- h1>Search for image using Google Custom Search API and resize & crop the image afterwords using Python</h1>
+<h1>Google Images Search</h1>
 
-Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle.<br />
+[![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
 
-This code enables you to do that.<br />
+<p>Ok, here's the thing, you want to fetch one image from Google Images and
+    you want to resize it and crop it from the middle<br />This code enables you to do that.</p>
 
-Except there's four things you need to do before using this peace of code in your project:<br />
+<p>Before you continue you need to setup your Google developers account and project:</p>
 
-1. Setup your Google developers account and project<br />
-2. Install dependencies<br />
-3. Edit settings.py<br />
-4. Define search parameters and image path
-
-<h2>1. Setup your Google developers account and project</h2>
-Create your developers acount and create your new project:<br />
-https://console.developers.google.com<br />
+<p><a href="https://console.developers.google.com" taget="_blank">https://console.developers.google.com</a><br />
 (Among all of the Google APIs enable "Custom Search API" for your project)<br /><br />
 
 Create custom search engine (ID of the engine is used as "GOOGLE_API_CUSTOM_SEARCH_CX" in settings.py):<br />
 https://cse.google.com/cse/all<br />
-(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
+(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")</p>
 
-<h2>2. Install dependencies</h2>
-<code>pip install Pillow</code><br />
-<code>pip install requests</code><br />
-<code>pip install python-resize-image</code><br />
-<code>pip install google-api-python-client</code>
+<p>After setting up you Google developers account and project you should have
+    your developers API key and project CX</p>
 
-<h2>3. Edit settings.py</h2>
-<p>Replace "__enter_your_api_key_here__" with your API key:</p>
+<h2>CLI usage</h2>
 
-```python
-GOOGLE_API_DEVELOPER_KEY = '__enter_your_api_key_here__'
+```bash
+# without environment variables:
+
+> gimages -k __your_dev_api_key__ -c __your_project_cx__ search -q puppies
 ```
 
-<p>Replace "__enter_your_cx_here__" with your cx:</p>
+```bash
+# with environment variables:
 
-```python
-GOOGLE_API_CUSTOM_SEARCH_CX = '__enter_your_cx_here__'
+> export GCS_DEVELOPER_KEY=__your_dev_api_key__
+> export GCS_CX=__your_project_cx__
+>
+> gimages search -q puppies
 ```
 
-<p>Define path where your new image will be saved:</p>
+```bash
+# search only (no download and resize):
 
-```python
-IMAGE_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'images', '%s')
+> gimages search -q puppies
 ```
 
-<p>Define image size:</p>
+```bash
+# search and download only (no resize):
 
-```python
-IMAGE_SIZE = [260, 260]
+> gimages search -q puppies -d /path/on/your/drive/where/images/should/be/downloaded
 ```
 
-<h2>4. Define search parameters and image path</h2>
-<p>In run.py replace "__my_search_query__" with desired search term, replace "__my_image__.jpg" with desired name of the image, and define other search parameters as you like.<br />
-You can find detailed description of search parameters in google_api.py</p>
+```bash
+# search, download and resize:
+
+> gimages search -q puppies -d /path/ -w 500 -h 500
+```
+
+<h2>Programmatic usage</h2>
 
 ```python
+from google_images_search import GoogleImagesSearch
+
+# if you don't enter api key and cx, the package will try to search
+# them from environment variables GCS_DEVELOPER_KEY and GCS_CX
+gis = GoogleImagesSearch('__your_dev_api_key__', '__your_project_cx__')
+
+#define search params:
 search_params = {
-    'q': '__my_search_query__',
-    'num': 5,
-    'safe': 'off',
-    'fileType': 'jpg',
-    'imgType': 'photo',
-    'imgSize': 'large',
+    'q': '...',
+    'num': 1-50,
+    'safe': 'high|medium|off',
+    'fileType': 'jpg|gif|png',
+    'imgType': 'clipart|face|lineart|news|photo',
+    'imgSize': 'huge|icon|large|medium|small|xlarge|xxlarge',
     'searchType': 'image',
-    'imgDominantColor': 'black'
+    'imgDominantColor': 'black|blue|brown|gray|green|pink|purple|teal|white|yellow'
 }
-path_to_image = settings.IMAGE_PATH % '__my_image__.jpg'
+
+# this will only search for images:
+gis.search(search_params=search_params)
+
+# this will search and download:
+gis.search(search_params=search_params, path_to_dir='/path/')
+
+# this will search, download and resize:
+gis.search(search_params=search_params, path_to_dir='/path/', width=500, height=500)
+
+# search first, then download and resize afterwords
+gis.search(search_params=search_params)
+for image in gis.result():
+    image.download('/path/')
+    image.resize(500, 500)
 ```
-</-->

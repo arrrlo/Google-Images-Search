@@ -11,18 +11,18 @@ class FetchResizeSave(object):
 
     def __init__(self, developer_key, custom_search_cx):
         self._google_custom_search = GoogleCustomSearch(developer_key, custom_search_cx)
-        self._search_resut = {}
+        self._search_resut = []
 
     def search(self, search_params, path_to_dir=False, width=None, height=None):
-        image = {}
-
         for url in self._google_custom_search.search(search_params):
-            image['url'] = url
+
+            image = GSImage(self)
+            image.url = url
+
             if path_to_dir:
-                path_to_image = self.download(url, path_to_dir)
-                image['path'] = path_to_image
+                image.download(path_to_dir)
                 if width and height:
-                    self.resize(path_to_image, width, height)
+                    image.resize(width, height)
 
             self._search_resut.append(image)
 
@@ -42,8 +42,45 @@ class FetchResizeSave(object):
         return path_to_image
 
     def resize(self, path_to_image, width, height):
-        fd_img = open(path_to_image, 'r')
-        img = Image.open(fd_img)
-        img = resizeimage.resize_cover(img, [width, height])
-        img.save(path_to_image, img.format)
-        fd_img.close()
+        try:
+            fd_img = open(path_to_image, 'rb')
+            img = Image.open(fd_img)
+            img = resizeimage.resize_cover(img, [int(width), int(height)])
+            img.save(path_to_image, img.format)
+            fd_img.close()
+        except resizeimage.ImageSizeError as e:
+            pass
+
+
+class GSImage(object):
+
+    def __init__(self, fetch_resize_save):
+        self._fetch_resize_save = fetch_resize_save
+
+        self._url = None
+        self._path = None
+
+        self.resized = False
+
+    @property
+    def url(self):
+        return self._url
+
+    @url.setter
+    def url(self, image_url):
+        self._url = image_url
+
+    @property
+    def path(self):
+        return self._path
+
+    @path.setter
+    def path(self, image_path):
+        self._path = image_path
+
+    def download(self, path_to_dir):
+        self._path = self._fetch_resize_save.download(self._url, path_to_dir)
+
+    def resize(self, width, height):
+        self._fetch_resize_save.resize(self._path, width, height)
+        self.resized = True
