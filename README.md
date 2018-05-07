@@ -7,10 +7,9 @@
 
 <p>Before you continue you need to setup your Google developers account and project:</p>
 
-<p><a href="https://console.developers.google.com" taget="_blank">https://console.developers.google.com</a><br />
-(Among all of the Google APIs enable "Custom Search API" for your project)<br /><br />
+<p>https://console.developers.google.com<br />
+(Among all of the Google APIs enable "Custom Search API" for your project)<br />
 
-Create custom search engine (ID of the engine is used as "GOOGLE_API_CUSTOM_SEARCH_CX" in settings.py):<br />
 https://cse.google.com/cse/all<br />
 (In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")</p>
 
