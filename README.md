@@ -83,7 +83,7 @@ gis.search(search_params=search_params, path_to_dir='/path/', width=500, height=
 
 # search first, then download and resize afterwords
 gis.search(search_params=search_params)
-for image in gis.result():
+for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
 ```
