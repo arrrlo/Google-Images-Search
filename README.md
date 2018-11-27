@@ -104,21 +104,28 @@ from PIL import Image
 
 gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
 
-myBytesIO = BytesIO()
+my_bytes_io = BytesIO()
 
 gis.search({'q': 'puppies', 'num': 3})
 for image in gis.results():
     # here we tell the BytesIO object to go back to address 0
-    myBytesIO.seek(0)
-    
-    # this function writes the image to the object
-    image.download_bio(myBytesIO)
-    
+    my_bytes_io.seek(0)
+
+    # take raw image data
+    raw_image_data = image.get_raw_data()
+
+    # this function writes the raw image data to the object
+    image.copy_to(my_bytes_io, raw_image_data)
+
+    # or without the raw data which will be automatically taken
+    # inside the copy_to() method
+    image.copy_to(my_bytes_io)
+
     # we go back to address 0 again so PIL can read it from start to finish
-    myBytesIO.seek(0)
-    
+    my_bytes_io.seek(0)
+
     # create a temporary image object
-    temp_img = Image.open(myBytesIO)
+    temp_img = Image.open(my_bytes_io)
     
     # show it in the default system photo viewer
     temp_img.show()

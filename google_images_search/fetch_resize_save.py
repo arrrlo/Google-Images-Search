@@ -33,18 +33,20 @@ class FetchResizeSave(object):
         if not os.path.exists(path_to_dir):
             os.makedirs(path_to_dir)
 
-        req = requests.get(url, stream=True)
+        raw_data = self.get_raw_data(url)
         path_to_image = os.path.join(path_to_dir, url.split('/')[-1].split('?')[0])
         with open(path_to_image, 'wb') as f:
-            req.raw.decode_content = True
-            shutil.copyfileobj(req.raw, f)
+            self.copy_to(raw_data, f)
 
         return path_to_image
     
-    def download_bio(self, url, bio):
+    def get_raw_data(self, url):
         req = requests.get(url, stream=True)
         req.raw.decode_content = True
-        shutil.copyfileobj(req.raw, bio)
+        return req.raw
+
+    def copy_to(self, raw_data, obj):
+        shutil.copyfileobj(raw_data, obj)
 
     def resize(self, path_to_image, width, height):
         try:
@@ -86,8 +88,14 @@ class GSImage(object):
     def download(self, path_to_dir):
         self._path = self._fetch_resize_save.download(self._url, path_to_dir)
         
-    def download_bio(self, bio):
-        self._fetch_resize_save.download_bio(self._url, bio)
+    def get_raw_data(self):
+        return self._fetch_resize_save.get_raw_data(self._url)
+
+    def copy_to(self, obj, raw_data=None):
+        if not raw_data:
+            raw_data = self.get_raw_data()
+
+        return self._fetch_resize_save.copy_to(raw_data, obj)
 
     def resize(self, width, height):
         self._fetch_resize_save.resize(self._path, width, height)
