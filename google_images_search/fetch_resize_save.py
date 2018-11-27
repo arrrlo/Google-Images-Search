@@ -40,6 +40,11 @@ class FetchResizeSave(object):
             shutil.copyfileobj(req.raw, f)
 
         return path_to_image
+    
+    def download_bio(self, url, bio):
+        req = requests.get(url, stream=True)
+        req.raw.decode_content = True
+        shutil.copyfileobj(req.raw, bio)
 
     def resize(self, path_to_image, width, height):
         try:
@@ -80,6 +85,9 @@ class GSImage(object):
 
     def download(self, path_to_dir):
         self._path = self._fetch_resize_save.download(self._url, path_to_dir)
+        
+    def download_bio(self, bio):
+        self._fetch_resize_save.download_bio(self._url, bio)
 
     def resize(self, width, height):
         self._fetch_resize_save.resize(self._path, width, height)
