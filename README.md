@@ -1,6 +1,9 @@
 # Google Images Search
 
 [![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
+[![Build Status](https://travis-ci.com/arrrlo/Google-Images-Search.svg?branch=master)](https://travis-ci.com/arrrlo/Google-Images-Search)
+![GitHub](https://img.shields.io/github/license/arrrlo/Google-Images-Search.svg?color=blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/arrrlo/Google-Images-Search.svg?color=blue)
 
 Ok, here's the thing, you want to fetch one image from Google Images and
     you want to resize it and crop it from the middle<br />This code enables you to do that.
