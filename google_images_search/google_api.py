@@ -5,10 +5,13 @@ from apiclient.discovery import build
 
 class GoogleCustomSearch(object):
 
-    def __init__(self, developer_key=None, custom_search_cx=None):
+    def __init__(self, developer_key=None,
+                 custom_search_cx=None):
 
-        self._developer_key = developer_key or os.environ.get('GCS_DEVELOPER_KEY')
-        self._custom_search_cx = custom_search_cx or os.environ.get('GCS_CX')
+        self._developer_key = developer_key or \
+                              os.environ.get('GCS_DEVELOPER_KEY')
+        self._custom_search_cx = custom_search_cx or \
+                                 os.environ.get('GCS_CX')
 
         self._google_build = None
 
@@ -23,30 +26,31 @@ class GoogleCustomSearch(object):
             'imgDominantColor': None
         }
 
-    @property
-    def google_service(self):
+    def _query_google_api(self, search_params):
         if not self._google_build:
-            self._google_build = build("customsearch", "v1", developerKey=self._developer_key)
-        return self._google_build
+            self._google_build = build("customsearch", "v1",
+                                       developerKey=self._developer_key)
 
-    def search_params(self, params):
+        return self._google_build.cse().list(
+            cx=self._custom_search_cx, **search_params).execute()
+
+    def _search_params(self, params):
         search_params = {}
 
         for key, value in self._search_params_keys.items():
-            if key in params:
-                search_params[key] = params[key]
-            else:
-                if value:
-                    search_params[key] = value
+            params_value = params.get(key)
+            if params_value:
+                search_params[key] = params_value
+            elif value:
+                search_params[key] = value
 
         return search_params
 
     def search(self, params):
-        search_params = self.search_params(params)
+        search_params = self._search_params(params)
 
         try:
-            res = self.google_service.cse()\
-                .list(cx=self._custom_search_cx, **search_params).execute()
+            res = self._query_google_api(search_params)
         except:
             raise GoogleBackendException()
 

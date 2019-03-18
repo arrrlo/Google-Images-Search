@@ -3,3 +3,4 @@
 /build/
 /dist/
 /google_images_search/
+/tests/__pycache__/

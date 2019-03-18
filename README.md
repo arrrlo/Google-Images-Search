@@ -1,22 +1,22 @@
-<h1>Google Images Search</h1>
+# Google Images Search
 
 [![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
 
-<p>Ok, here's the thing, you want to fetch one image from Google Images and
-    you want to resize it and crop it from the middle<br />This code enables you to do that.</p>
+Ok, here's the thing, you want to fetch one image from Google Images and
+    you want to resize it and crop it from the middle<br />This code enables you to do that.
 
-<p>Before you continue you need to setup your Google developers account and project:</p>
+Before you continue you need to setup your Google developers account and project:
 
-<p>https://console.developers.google.com<br />
-(Among all of the Google APIs enable "Custom Search API" for your project)<br />
+https://console.developers.google.com
+(Among all of the Google APIs enable "Custom Search API" for your project)
 
-https://cse.google.com/cse/all<br />
-(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")</p>
+https://cse.google.com/cse/all
+(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
 
-<p>After setting up you Google developers account and project you should have
-    your developers API key and project CX</p>
+After setting up you Google developers account and project you should have
+    your developers API key and project CX
 
-<h2>CLI usage</h2>
+## CLI usage
 
 ```bash
 # without environment variables:
@@ -51,7 +51,7 @@ https://cse.google.com/cse/all<br />
 > gimages search -q puppies -d /path/ -w 500 -h 500
 ```
 
-<h2>Programmatic usage</h2>
+## Programmatic usage
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -63,7 +63,7 @@ gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
 # example: GoogleImagesSearch('ABcDeFGhiJKLmnopqweRty5asdfghGfdSaS4abC', '012345678987654321012:abcde_fghij')
 
 #define search params:
-search_params = {
+_search_params = {
     'q': '...',
     'num': 1-50,
     'safe': 'high|medium|off',
@@ -75,22 +75,22 @@ search_params = {
 }
 
 # this will only search for images:
-gis.search(search_params=search_params)
+gis.search(_search_params=_search_params)
 
 # this will search and download:
-gis.search(search_params=search_params, path_to_dir='/path/')
+gis.search(_search_params=_search_params, path_to_dir='/path/')
 
 # this will search, download and resize:
-gis.search(search_params=search_params, path_to_dir='/path/', width=500, height=500)
+gis.search(_search_params=_search_params, path_to_dir='/path/', width=500, height=500)
 
 # search first, then download and resize afterwards
-gis.search(search_params=search_params)
+gis.search(_search_params=_search_params)
 for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
 ```
 
-<h2>Saving to a BytesIO object</h2>
+## Saving to a BytesIO object
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -130,3 +130,10 @@ for image in gis.results():
     # show it in the default system photo viewer
     temp_img.show()
 ```
+
+# Changelog
+
+## 0.4.0
+
+#### Added:
+- Tests added. 
