@@ -21,8 +21,23 @@ class TestFetchResizeSave(unittest.TestCase):
         self._api_cx = '__api_cx__'
         self._frs = FetchResizeSave(self._api_key, self._api_cx)
 
+        self._base_dir = os.path.join(
+            os.path.dirname(
+                os.path.dirname(os.path.abspath(__file__))
+            ), 'tests'
+        )
+        self._file_paths = [
+            os.path.join(self._base_dir, '1.png'),
+            os.path.join(self._base_dir, '2.png'),
+        ]
+
     def tearDown(self):
         self._frs = None
+        for path in self._file_paths:
+            try:
+                os.remove(path)
+            except FileNotFoundError:
+                pass
 
     def test_init(self):
         self.assertEqual(self._frs._search_resut, [])
@@ -33,12 +48,6 @@ class TestFetchResizeSave(unittest.TestCase):
             self.assertEqual(item.url, items['items'][i]['link'])
 
     def test_search_path(self):
-        download_path = os.path.join(
-            os.path.dirname(
-                os.path.dirname(os.path.abspath(__file__))
-            ), 'tests'
-        )
-        self._frs.search({}, path_to_dir=download_path, width=100, height=100)
+        self._frs.search({}, path_to_dir=self._base_dir, width=100, height=100)
         for i, item in enumerate(self._frs.results()):
-            print(item.path)
-            self.assertTrue(os.path.exists(item.path))
+            self.assertEqual(item.path, self._file_paths[i])
