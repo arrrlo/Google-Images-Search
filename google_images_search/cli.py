@@ -1,5 +1,3 @@
-import os
-import six
 import click
 from termcolor import cprint
 from pyfiglet import figlet_format

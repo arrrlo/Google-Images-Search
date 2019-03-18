@@ -5,8 +5,8 @@
 ![GitHub](https://img.shields.io/github/license/arrrlo/Google-Images-Search.svg?color=blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/arrrlo/Google-Images-Search.svg?color=blue)
 
-Ok, here's the thing, you want to fetch one image from Google Images and
-    you want to resize it and crop it from the middle<br />This code enables you to do that.
+Ok, here's the thing, you want to fetch one image from Google Images and you want to resize it and crop it from the middle
+This code enables you to do that.
 
 Before you continue you need to setup your Google developers account and project:
 
@@ -16,8 +16,13 @@ https://console.developers.google.com
 https://cse.google.com/cse/all
 (In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
 
-After setting up you Google developers account and project you should have
-    your developers API key and project CX
+After setting up you Google developers account and project you should have your developers API key and project CX
+
+## Installation
+
+```bash
+> pip install Google-Images-Search
+```
 
 ## CLI usage
 
@@ -136,7 +141,12 @@ for image in gis.results():
 
 # Changelog
 
-## 0.4.0
+## 0.3.1
+
+#### Added:
+- Class docstrings.
+
+## 0.3.0
 
 #### Added:
 - Tests added. 
