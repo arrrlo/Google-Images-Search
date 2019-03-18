@@ -1,16 +1,16 @@
 language: python
 
 python:
-- '3.6'
+  - '3.6'
 
 script:
-- pip install .
-- pytest -vvv
+  - pip install .
+  - pytest -vvv
 
 deploy:
   provider: pypi
-  user: arrrlo
+  user: "arrrlo"
   password:
-    secure: R3nddqyhEMotFiC6pz8nLkZJFlJ64N6NJs1mbEaPowgZ9sBh6Xh3DWBaDJ5M7offCTeAKOrzFQiENCA9gqDsyf9JuEGylDVejnREX23JUjyalfXkpX1LQQp8yEvG0OhnYtFV9+RdMFGwRHO2uT5QFkm/wEWjOqdpC0PxcVofNsz0YFCtljT2K2weNiJyPscq2bWLY6KX5LeFclxQqmEeR6VpAnTFGu8PuxWr1Tpb0Bm5yH7OsKgSXrgJIKI3l1k5phJw7bxRymvxXdb9P79vk+2AOWQEnseshBZ53VJ95QWHx61SLtR40V8DOqN0UMd24/qh00OD0Ctx25KIwnlchqNNg9ghyNmAdimA+4e6I5C3qPOT/U4itevqWZnbDhx/USmQgoUtg0rwHYZQWe3c1glwbLFx/7zOVXlat1Jnn+9l3Fn48YIosVGebQQLrqF/JTgFd2fyxukZsWO+rflOXblzBcbWU1CDAuvObfJDB6Px1yshwXwByEQJQLmEUZLxqtEnrKJFlsSmQVOSI5FLgyIyWg64/xNMEcXvdz7XH+SAD/pX+9LHP7X/vpvSh4Fw3CQCWLgNY6IZEbO01PtNubG27Msddeu++PCM1sY9h39PEDB8PM6SY39s3kTSMVNO0K3QtkimvgPSQtyACn0NLQffB6hiyhwWblWAL/twcn4=
+    secure: "R3nddqyhEMotFiC6pz8nLkZJFlJ64N6NJs1mbEaPowgZ9sBh6Xh3DWBaDJ5M7offCTeAKOrzFQiENCA9gqDsyf9JuEGylDVejnREX23JUjyalfXkpX1LQQp8yEvG0OhnYtFV9+RdMFGwRHO2uT5QFkm/wEWjOqdpC0PxcVofNsz0YFCtljT2K2weNiJyPscq2bWLY6KX5LeFclxQqmEeR6VpAnTFGu8PuxWr1Tpb0Bm5yH7OsKgSXrgJIKI3l1k5phJw7bxRymvxXdb9P79vk+2AOWQEnseshBZ53VJ95QWHx61SLtR40V8DOqN0UMd24/qh00OD0Ctx25KIwnlchqNNg9ghyNmAdimA+4e6I5C3qPOT/U4itevqWZnbDhx/USmQgoUtg0rwHYZQWe3c1glwbLFx/7zOVXlat1Jnn+9l3Fn48YIosVGebQQLrqF/JTgFd2fyxukZsWO+rflOXblzBcbWU1CDAuvObfJDB6Px1yshwXwByEQJQLmEUZLxqtEnrKJFlsSmQVOSI5FLgyIyWg64/xNMEcXvdz7XH+SAD/pX+9LHP7X/vpvSh4Fw3CQCWLgNY6IZEbO01PtNubG27Msddeu++PCM1sY9h39PEDB8PM6SY39s3kTSMVNO0K3QtkimvgPSQtyACn0NLQffB6hiyhwWblWAL/twcn4="
   on:
     branch: master
