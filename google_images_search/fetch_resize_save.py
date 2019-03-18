@@ -15,7 +15,6 @@ class FetchResizeSave(object):
 
     def search(self, search_params, path_to_dir=False, width=None, height=None):
         for url in self._google_custom_search.search(search_params):
-
             image = GSImage(self)
             image.url = url
 
@@ -87,7 +86,7 @@ class GSImage(object):
 
     def download(self, path_to_dir):
         self._path = self._fetch_resize_save.download(self._url, path_to_dir)
-        
+
     def get_raw_data(self):
         return self._fetch_resize_save.get_raw_data(self._url)
 
