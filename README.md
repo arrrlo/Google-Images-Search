@@ -141,6 +141,11 @@ for image in gis.results():
 
 # Changelog
 
+## 0.3.2
+
+#### Fixed:
+- API call default parameter changed from specific to blank.
+
 ## 0.3.1
 
 #### Added:
