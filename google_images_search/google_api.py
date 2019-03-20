@@ -19,10 +19,10 @@ class GoogleCustomSearch(object):
         self._search_params_keys = {
             'q': None,
             'searchType': 'image',
-            'num': 5,
-            'imgType': 'photo',
-            'imgSize': 'large',
-            'fileType': 'jpg',
+            'num': 1,
+            'imgType': None,
+            'imgSize': None,
+            'fileType': None,
             'safe': 'off',
             'imgDominantColor': None
         }
