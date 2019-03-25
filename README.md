@@ -141,6 +141,11 @@ for image in gis.results():
 
 # Changelog
 
+## 0.3.3
+
+#### Fixed:
+- Travis CI definition for PyPi upload.
+
 ## 0.3.2
 
 #### Fixed:
