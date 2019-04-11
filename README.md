@@ -141,6 +141,11 @@ for image in gis.results():
 
 # Changelog
 
+## 0.3.4
+
+#### Fixed:
+- Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
+
 ## 0.3.3
 
 #### Fixed:
