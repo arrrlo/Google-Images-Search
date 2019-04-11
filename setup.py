@@ -36,7 +36,7 @@ setup(
         'pyfiglet~=0.8',
         'termcolor~=1.1',
         'click~=7.0',
-        'six~=1.12.0',
+        'six~=1.12',
         'requests~=2.21',
         'Pillow~=6.0',
         'python-resize-image~=1.1',
