@@ -32,15 +32,15 @@ setup(
 
     packages=['google_images_search'],
     install_requires=[
-        'colorama~=0.3',
-        'pyfiglet~=0.7.5',
-        'termcolor~=1.1.0',
-        'click==6.3',
-        'six~=1.11.0',
-        'requests~=2.20.0',
-        'Pillow~=5.2.0',
-        'python-resize-image~=1.1.11',
-        'google-api-python-client~=1.6.6',
+        'colorama~=0.4',
+        'pyfiglet~=0.8',
+        'termcolor~=1.1',
+        'click~=7.0',
+        'six~=1.12',
+        'requests~=2.21',
+        'Pillow~=6.0',
+        'python-resize-image~=1.1',
+        'google-api-python-client~=1.7',
     ],
 
     entry_points={
