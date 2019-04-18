@@ -11,20 +11,24 @@ class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
     def __init__(self, developer_key, custom_search_cx):
-        self._google_custom_search = GoogleCustomSearch(developer_key, custom_search_cx)
+        self._google_custom_search = GoogleCustomSearch(developer_key,
+                                                        custom_search_cx)
         self._search_resut = []
 
-    def search(self, search_params, path_to_dir=False, width=None, height=None):
+    def search(self, search_params, path_to_dir=False, width=None,
+               height=None, cache_discovery=True):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
         :param path_to_dir: path where the images should be downloaded
         :param width: crop width of the images
         :param height: crop height of the images
+        :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
 
-        for url in self._google_custom_search.search(search_params):
+        for url in self._google_custom_search.search(search_params,
+                                                     cache_discovery):
             image = GSImage(self)
             image.url = url
 

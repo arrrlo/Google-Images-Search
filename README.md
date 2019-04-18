@@ -147,6 +147,11 @@ for image in gis.results():
 
 # Changelog
 
+## 0.3.6
+
+### Added:
+-   cache_discovery option forward fix.
+
 ## 0.3.5
 
 ### Added:
