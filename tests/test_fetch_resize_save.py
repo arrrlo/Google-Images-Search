@@ -11,7 +11,8 @@ items = {
     ]
 }
 
-GoogleCustomSearch._query_google_api = lambda self, search_params: items
+GoogleCustomSearch._query_google_api = \
+    lambda self, search_params, cache_discovery: items
 
 
 class TestFetchResizeSave(unittest.TestCase):
@@ -36,7 +37,7 @@ class TestFetchResizeSave(unittest.TestCase):
         for path in self._file_paths:
             try:
                 os.remove(path)
-            except FileNotFoundError:
+            except OSError:
                 pass
 
     def test_init(self):
@@ -51,3 +52,7 @@ class TestFetchResizeSave(unittest.TestCase):
         self._frs.search({}, path_to_dir=self._base_dir, width=100, height=100)
         for i, item in enumerate(self._frs.results()):
             self.assertEqual(item.path, self._file_paths[i])
+
+
+if __name__ == '__main__':
+    unittest.main()

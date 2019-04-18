@@ -27,15 +27,17 @@ class GoogleCustomSearch(object):
             'imgDominantColor': None
         }
 
-    def _query_google_api(self, search_params):
+    def _query_google_api(self, search_params, cache_discovery=True):
         """Queries Google api
         :param search_params: dict of params
+        :param cache_discovery whether or not to cache the discovery doc
         :return: search result object
         """
 
         if not self._google_build:
             self._google_build = build("customsearch", "v1",
-                                       developerKey=self._developer_key, cache_discovery=False)
+                                       developerKey=self._developer_key,
+                                       cache_discovery=cache_discovery)
 
         return self._google_build.cse().list(
             cx=self._custom_search_cx, **search_params).execute()
@@ -58,17 +60,18 @@ class GoogleCustomSearch(object):
 
         return search_params
 
-    def search(self, params):
+    def search(self, params, cache_discovery=True):
         """Search for images and returns
         them using generator object
-        :param params:
-        :return:
+        :param params: search params
+        :param cache_discovery whether or not to cache the discovery doc
+        :return: yields url to searched image
         """
 
         search_params = self._search_params(params)
 
         try:
-            res = self._query_google_api(search_params)
+            res = self._query_google_api(search_params, cache_discovery)
         except:
             raise GoogleBackendException()
 
