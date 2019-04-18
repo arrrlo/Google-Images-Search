@@ -35,7 +35,7 @@ class GoogleCustomSearch(object):
 
         if not self._google_build:
             self._google_build = build("customsearch", "v1",
-                                       developerKey=self._developer_key)
+                                       developerKey=self._developer_key, cache_discovery=False)
 
         return self._google_build.cse().list(
             cx=self._custom_search_cx, **search_params).execute()
