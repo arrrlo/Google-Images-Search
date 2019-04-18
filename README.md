@@ -89,16 +89,16 @@ _search_params = {
 }
 
 # this will only search for images:
-gis.search(_search_params=_search_params)
+gis.search(search_params=_search_params)
 
 # this will search and download:
-gis.search(_search_params=_search_params, path_to_dir='/path/')
+gis.search(search_params=_search_params, path_to_dir='/path/')
 
 # this will search, download and resize:
-gis.search(_search_params=_search_params, path_to_dir='/path/', width=500, height=500)
+gis.search(search_params=_search_params, path_to_dir='/path/', width=500, height=500)
 
 # search first, then download and resize afterwards
-gis.search(_search_params=_search_params)
+gis.search(search_params=_search_params)
 for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
