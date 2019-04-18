@@ -57,7 +57,6 @@ def search(ctx, query, num, safe, filetype, imagetype,
     click.clear()
 
     cprint(figlet_format('Google Images Search', width=120), 'red')
-    click.secho(' '*80 + 'by Ivan Arar', fg='red')
 
     click.echo('-'*120)
 

@@ -62,3 +62,7 @@ class TestGoogleApi(unittest.TestCase):
             'imgDominantColor': 'black'
         }
         self.assertEqual(self._api._search_params(params), params)
+
+
+if __name__ == '__main__':
+    unittest.main()

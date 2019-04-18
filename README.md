@@ -2,6 +2,12 @@
 
 [![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
 [![Build Status](https://travis-ci.com/arrrlo/Google-Images-Search.svg?branch=master)](https://travis-ci.com/arrrlo/Google-Images-Search)
+
+![GitHub issues](https://img.shields.io/github/issues/arrrlo/Google-Images-Search.svg)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/arrrlo/Google-Images-Search.svg)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/arrrlo/Google-Images-Search.svg)
+
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Google-Images-Search.svg)
 ![GitHub](https://img.shields.io/github/license/arrrlo/Google-Images-Search.svg?color=blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/arrrlo/Google-Images-Search.svg?color=blue)
 
@@ -141,27 +147,37 @@ for image in gis.results():
 
 # Changelog
 
+## 0.3.5
+
+### Added:
+-   cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
+
 ## 0.3.4
 
-#### Fixed:
-- Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
+### Fixed:
+-   Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
 
 ## 0.3.3
 
-#### Fixed:
-- Travis CI definition for PyPi upload.
+### Fixed:
+-   Travis CI definition for PyPi upload.
 
 ## 0.3.2
 
-#### Fixed:
-- API call default parameter changed from specific to blank.
+### Fixed:
+-   API call default parameter changed from specific to blank (change made by [@mateusrangel](https://github.com/mateusrangel)).
 
 ## 0.3.1
 
-#### Added:
-- Class docstrings.
+### Added:
+-   Class docstrings.
 
 ## 0.3.0
 
-#### Added:
-- Tests added. 
+### Added:
+-   Tests added. 
+
+## 0.2.0
+
+### Added:
+-   Saving to a BytesIO object (change made by [@fuchsia80](https://github.com/fuchsia80)). 
