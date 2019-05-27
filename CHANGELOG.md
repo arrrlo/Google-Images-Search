@@ -27,7 +27,7 @@
 
 ## 0.3.1
 
-### Added:  
+### Added in 0.3.1:  
 -   Class docstrings.
 
 ## 0.3.0
