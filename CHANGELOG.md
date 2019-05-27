@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.7
+
+### Fixed in 0.3.7
+-   code formatted.
+
 ## 0.3.6
 
 ### Added in 0.3.6
