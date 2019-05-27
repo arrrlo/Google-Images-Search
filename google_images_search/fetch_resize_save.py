@@ -57,14 +57,15 @@ class FetchResizeSave(object):
         if not os.path.exists(path_to_dir):
             os.makedirs(path_to_dir)
 
-        raw_data = self.get_raw_data(url)
+        raw_data = self.__class__.get_raw_data(url)
         path_to_image = os.path.join(path_to_dir, url.split('/')[-1].split('?')[0])
         with open(path_to_image, 'wb') as f:
-            self.copy_to(raw_data, f)
+            self.__class__.copy_to(raw_data, f)
 
         return path_to_image
-    
-    def get_raw_data(self, url):
+
+    @staticmethod
+    def get_raw_data(url):
         """Takes data from image url into a variable
         :param url: url to image
         :return: raw image data
@@ -74,7 +75,8 @@ class FetchResizeSave(object):
         req.raw.decode_content = True
         return req.raw
 
-    def copy_to(self, raw_data, obj):
+    @staticmethod
+    def copy_to(raw_data, obj):
         """
         Copy raw image data to another object, preferably BytesIO
         :param raw_data: raw image data
@@ -84,7 +86,8 @@ class FetchResizeSave(object):
 
         shutil.copyfileobj(raw_data, obj)
 
-    def resize(self, path_to_image, width, height):
+    @staticmethod
+    def resize(path_to_image, width, height):
         """Resize the image and save it again.
         :param path_to_image: os.path
         :param width: int
@@ -157,7 +160,7 @@ class GSImage(object):
         :return: raw data
         """
 
-        return self._fetch_resize_save.get_raw_data(self._url)
+        return self._fetch_resize_save.__class__.get_raw_data(self._url)
 
     def copy_to(self, obj, raw_data=None):
         """Copies raw image data to another object, preferably BytesIO
@@ -169,7 +172,7 @@ class GSImage(object):
         if not raw_data:
             raw_data = self.get_raw_data()
 
-        self._fetch_resize_save.copy_to(raw_data, obj)
+        self._fetch_resize_save.__class__.copy_to(raw_data, obj)
 
     def resize(self, width, height):
         """Resize the image
@@ -178,5 +181,5 @@ class GSImage(object):
         :return: None
         """
 
-        self._fetch_resize_save.resize(self._path, width, height)
+        self._fetch_resize_save.__class__.resize(self._path, width, height)
         self.resized = True
