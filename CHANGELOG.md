@@ -12,7 +12,7 @@
 
 ## 0.3.4
 
-### Fixed:  
+### Fixed added in 0.3.4:  
 -   Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
 
 ## 0.3.3
