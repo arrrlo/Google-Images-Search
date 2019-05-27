@@ -92,14 +92,11 @@ class FetchResizeSave(object):
         :return: None
         """
 
-        try:
-            fd_img = open(path_to_image, 'rb')
-            img = Image.open(fd_img)
-            img = resizeimage.resize_cover(img, [int(width), int(height)])
-            img.save(path_to_image, img.format)
-            fd_img.close()
-        except resizeimage.ImageSizeError as e:
-            pass
+        fd_img = open(path_to_image, 'rb')
+        img = Image.open(fd_img)
+        img = resizeimage.resize_cover(img, [int(width), int(height)])
+        img.save(path_to_image, img.format)
+        fd_img.close()
 
 
 class GSImage(object):

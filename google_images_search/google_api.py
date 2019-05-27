@@ -80,7 +80,7 @@ class GoogleCustomSearch(object):
                 check = requests.get(image['link'], timeout=5)
                 if check.status_code == 200:
                     yield image['link']
-            except:
+            except requests.exceptions.ConnectTimeout:
                 pass
 
 

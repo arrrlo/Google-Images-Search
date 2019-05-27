@@ -1,0 +1,41 @@
+# Changelog
+
+## 0.3.6
+
+### Added:  
+-   cache_discovery option forward fix.
+
+## 0.3.5
+
+### Added:  
+-   cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
+
+## 0.3.4
+
+### Fixed:  
+-   Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
+
+## 0.3.3
+
+### Fixed:  
+-   Travis CI definition for PyPi upload.
+
+## 0.3.2
+
+### Fixed:  
+-   API call default parameter changed from specific to blank (change made by [@mateusrangel](https://github.com/mateusrangel)).
+
+## 0.3.1
+
+### Added:  
+-   Class docstrings.
+
+## 0.3.0
+
+### Added:  
+-   Tests added. 
+
+## 0.2.0
+
+### Added:  
+-   Saving to a BytesIO object (change made by [@fuchsia80](https://github.com/fuchsia80)). 

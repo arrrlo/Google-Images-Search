@@ -16,10 +16,10 @@ This code enables you to do that.
 
 Before you continue you need to setup your Google developers account and project:
 
-https://console.developers.google.com
+[https://console.developers.google.com](https://console.developers.google.com)
 (Among all of the Google APIs enable "Custom Search API" for your project)
 
-https://cse.google.com/cse/all
+[https://cse.google.com/cse/all](https://cse.google.com/cse/all)
 (In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
 
 After setting up you Google developers account and project you should have your developers API key and project CX
@@ -144,45 +144,3 @@ for image in gis.results():
     # show it in the default system photo viewer
     temp_img.show()
 ```
-
-# Changelog
-
-## 0.3.6
-
-### Added:
--   cache_discovery option forward fix.
-
-## 0.3.5
-
-### Added:
--   cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
-
-## 0.3.4
-
-### Fixed:
--   Dependencies versions updated (change made by [@maredov](https://github.com/marodev))
-
-## 0.3.3
-
-### Fixed:
--   Travis CI definition for PyPi upload.
-
-## 0.3.2
-
-### Fixed:
--   API call default parameter changed from specific to blank (change made by [@mateusrangel](https://github.com/mateusrangel)).
-
-## 0.3.1
-
-### Added:
--   Class docstrings.
-
-## 0.3.0
-
-### Added:
--   Tests added. 
-
-## 0.2.0
-
-### Added:
--   Saving to a BytesIO object (change made by [@fuchsia80](https://github.com/fuchsia80)). 
