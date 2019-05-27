@@ -7,7 +7,7 @@
 
 ## 0.3.5
 
-### Added:  
+### Added in 0.3.5:  
 -   cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
 
 ## 0.3.4
