@@ -37,5 +37,5 @@
 
 ## 0.2.0
 
-### Added:  
+### Added in 0.2.0:  
 -   Saving to a BytesIO object (change made by [@fuchsia80](https://github.com/fuchsia80)). 
