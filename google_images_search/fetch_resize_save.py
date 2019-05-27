@@ -1,6 +1,6 @@
 import os
 import shutil
-#import curses
+import curses
 import requests
 import threading
 from PIL import Image
@@ -17,7 +17,8 @@ class FetchResizeSave(object):
                                                         custom_search_cx)
         self._search_result = list()
         self._global_lock = threading.Lock()
-        #self._stdscr = curses.initscr()
+        self._stdscr = curses.initscr()
+        self._step = 0
 
         #curses.noecho()
         #curses.cbreak()
@@ -35,8 +36,9 @@ class FetchResizeSave(object):
         """
 
         threads = list()
-        for url in self._google_custom_search.search(search_params,
-                                                     cache_discovery):
+        for url in self._google_custom_search.search(
+                search_params, cache_discovery
+        ):
             image = GSImage(self)
             image.url = url
 
@@ -49,6 +51,10 @@ class FetchResizeSave(object):
 
         for thread in threads:
             thread.join()
+
+        curses.echo()
+        curses.nocbreak()
+        curses.endwin()
 
     def _download_and_resize(self, path_to_dir, image, width, height):
         """Method used for threading
@@ -87,10 +93,12 @@ class FetchResizeSave(object):
             path_to_dir, url.split('/')[-1].split('?')[0]
         )
 
-        for chunk in self.get_raw_data(url):
-            with open(path_to_image, 'wb') as f:
+        with open(path_to_image, 'wb+') as f:
+            for chunk in self.get_raw_data(url):
                 #self.__class__.copy_to(chunk, f)
                 f.write(chunk)
+
+        self._step += 2
 
         return path_to_image
 
@@ -100,15 +108,20 @@ class FetchResizeSave(object):
         :return: raw image data
         """
 
-        if True:#with self._global_lock:
-            with requests.get(url, stream=True) as req:
-                #req.raise_for_status()
-                #req.raw.decode_content = True
-                #return req.raw
+        progress = 0
+        image_length = requests.head(url, timeout=5).headers['Content-Length']
+        chunk_size = int(int(image_length)/100)+1
 
-                for chunk in req.iter_content(chunk_size=8192, decode_unicode=True):
-                    if chunk:  # filter out keep-alive new chunks
-                        yield chunk
+        with requests.get(url, stream=True) as req:
+            #req.raise_for_status()
+            #req.raw.decode_content = True
+            #return req.raw
+
+            for chunk in req.iter_content(chunk_size=chunk_size):
+                if chunk:  # filter out keep-alive new chunks
+                    progress += 1
+                    self._report_progress(self._step, url, progress)
+                    yield chunk
 
     @staticmethod
     def copy_to(raw_data, obj):
@@ -117,8 +130,6 @@ class FetchResizeSave(object):
         :param obj: BytesIO object
         :return: None
         """
-
-        print(raw_data)
 
         shutil.copyfileobj(raw_data, obj)
 
@@ -140,7 +151,7 @@ class FetchResizeSave(object):
     def _report_progress(self, line, filename, progress):
         self._stdscr.addstr(line, 0, "Downloading file: {0}".format(filename))
         self._stdscr.addstr(line + 1, 0,
-                      "Total progress: [{1:40}] {0}%".format(progress * 40,
+                      "Total progress: [{1:100}] {0}%".format(progress,
                                                              "#" * progress))
         self._stdscr.refresh()
 
