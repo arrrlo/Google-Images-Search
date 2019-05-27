@@ -17,7 +17,7 @@
 
 ## 0.3.3
 
-### Fixed:  
+### Fixed in 0.3.3:  
 -   Travis CI definition for PyPi upload.
 
 ## 0.3.2
