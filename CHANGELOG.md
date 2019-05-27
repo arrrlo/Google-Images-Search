@@ -2,7 +2,7 @@
 
 ## 0.3.6
 
-### Added:  
+### Added in 0.3.6:  
 -   cache_discovery option forward fix.
 
 ## 0.3.5
