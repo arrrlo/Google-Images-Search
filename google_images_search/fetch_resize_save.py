@@ -43,7 +43,7 @@ class FetchResizeSave(object):
         """Returns objects of downloaded images
         :return: list
         """
-        
+
         return self._search_resut
 
     def download(self, url, path_to_dir):
