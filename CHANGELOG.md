@@ -22,7 +22,7 @@
 
 ## 0.3.2
 
-### Fixed:  
+### Fixed in 0.3.2:  
 -   API call default parameter changed from specific to blank (change made by [@mateusrangel](https://github.com/mateusrangel)).
 
 ## 0.3.1
