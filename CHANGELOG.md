@@ -32,7 +32,7 @@
 
 ## 0.3.0
 
-### Added:  
+### Added in 0.3.0:  
 -   Tests added. 
 
 ## 0.2.0
