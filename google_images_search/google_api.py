@@ -70,17 +70,16 @@ class GoogleCustomSearch(object):
 
         search_params = self._search_params(params)
 
-        try:
-            res = self._query_google_api(search_params, cache_discovery)
-        except:
-            raise GoogleBackendException()
+        res = self._query_google_api(search_params, cache_discovery)
 
         for image in res.get('items'):
             try:
-                check = requests.get(image['link'], timeout=5)
-                if check.status_code == 200:
-                    yield image['link']
+                # check if the url is valid
+                requests.head(image['link'], timeout=5)
+                yield image['link']
             except requests.exceptions.ConnectTimeout:
+                pass
+            except requests.exceptions.SSLError:
                 pass
 
 

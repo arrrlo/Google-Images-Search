@@ -1,6 +1,8 @@
 import os
 import shutil
+#import curses
 import requests
+import threading
 from PIL import Image
 from resizeimage import resizeimage
 
@@ -13,7 +15,12 @@ class FetchResizeSave(object):
     def __init__(self, developer_key, custom_search_cx):
         self._google_custom_search = GoogleCustomSearch(developer_key,
                                                         custom_search_cx)
-        self._search_resut = []
+        self._search_result = list()
+        self._global_lock = threading.Lock()
+        #self._stdscr = curses.initscr()
+
+        #curses.noecho()
+        #curses.cbreak()
 
     def search(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=True):
@@ -27,24 +34,43 @@ class FetchResizeSave(object):
         :return: None
         """
 
+        threads = list()
         for url in self._google_custom_search.search(search_params,
                                                      cache_discovery):
             image = GSImage(self)
             image.url = url
 
-            if path_to_dir:
-                image.download(path_to_dir)
-                if width and height:
-                    image.resize(width, height)
+            thread = threading.Thread(
+                target=self._download_and_resize,
+                args=(path_to_dir, image, width, height)
+            )
+            thread.start()
+            threads.append(thread)
 
-            self._search_resut.append(image)
+        for thread in threads:
+            thread.join()
+
+    def _download_and_resize(self, path_to_dir, image, width, height):
+        """Method used for threading
+        :param path_to_dir: path to download dir
+        :param image: image object
+        :param width: crop width
+        :param height: crop height
+        :return: None
+        """
+
+        if path_to_dir:
+            image.download(path_to_dir)
+            if width and height:
+                image.resize(width, height)
+        self._search_result.append(image)
 
     def results(self):
         """Returns objects of downloaded images
         :return: list
         """
 
-        return self._search_resut
+        return self._search_result
 
     def download(self, url, path_to_dir):
         """Downloads image from url to path dir
@@ -57,32 +83,42 @@ class FetchResizeSave(object):
         if not os.path.exists(path_to_dir):
             os.makedirs(path_to_dir)
 
-        raw_data = self.__class__.get_raw_data(url)
-        path_to_image = os.path.join(path_to_dir, url.split('/')[-1].split('?')[0])
-        with open(path_to_image, 'wb') as f:
-            self.__class__.copy_to(raw_data, f)
+        path_to_image = os.path.join(
+            path_to_dir, url.split('/')[-1].split('?')[0]
+        )
+
+        for chunk in self.get_raw_data(url):
+            with open(path_to_image, 'wb') as f:
+                #self.__class__.copy_to(chunk, f)
+                f.write(chunk)
 
         return path_to_image
 
-    @staticmethod
-    def get_raw_data(url):
-        """Takes data from image url into a variable
+    def get_raw_data(self, url):
+        """Generator method for downloading images in chunks
         :param url: url to image
         :return: raw image data
         """
 
-        req = requests.get(url, stream=True)
-        req.raw.decode_content = True
-        return req.raw
+        if True:#with self._global_lock:
+            with requests.get(url, stream=True) as req:
+                #req.raise_for_status()
+                #req.raw.decode_content = True
+                #return req.raw
+
+                for chunk in req.iter_content(chunk_size=8192, decode_unicode=True):
+                    if chunk:  # filter out keep-alive new chunks
+                        yield chunk
 
     @staticmethod
     def copy_to(raw_data, obj):
-        """
-        Copy raw image data to another object, preferably BytesIO
+        """Copy raw image data to another object, preferably BytesIO
         :param raw_data: raw image data
         :param obj: BytesIO object
         :return: None
         """
+
+        print(raw_data)
 
         shutil.copyfileobj(raw_data, obj)
 
@@ -100,6 +136,13 @@ class FetchResizeSave(object):
         img = resizeimage.resize_cover(img, [int(width), int(height)])
         img.save(path_to_image, img.format)
         fd_img.close()
+
+    def _report_progress(self, line, filename, progress):
+        self._stdscr.addstr(line, 0, "Downloading file: {0}".format(filename))
+        self._stdscr.addstr(line + 1, 0,
+                      "Total progress: [{1:40}] {0}%".format(progress * 40,
+                                                             "#" * progress))
+        self._stdscr.refresh()
 
 
 class GSImage(object):
@@ -160,7 +203,7 @@ class GSImage(object):
         :return: raw data
         """
 
-        return self._fetch_resize_save.__class__.get_raw_data(self._url)
+        return self._fetch_resize_save.get_raw_data(self._url)
 
     def copy_to(self, obj, raw_data=None):
         """Copies raw image data to another object, preferably BytesIO
