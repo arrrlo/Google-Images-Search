@@ -1,4 +1,5 @@
 import os
+import copy
 import requests
 from apiclient.discovery import build
 
@@ -7,7 +8,8 @@ class GoogleCustomSearch(object):
     """Wrapper class for Google images search api"""
 
     def __init__(self, developer_key=None,
-                 custom_search_cx=None):
+                 custom_search_cx=None,
+                 fethch_resize_save=None):
 
         self._developer_key = developer_key or \
                               os.environ.get('GCS_DEVELOPER_KEY')
@@ -15,6 +17,8 @@ class GoogleCustomSearch(object):
                                  os.environ.get('GCS_CX')
 
         self._google_build = None
+        self._search_param_num = 0
+        self._fethch_resize_save = fethch_resize_save
 
         self._search_params_keys = {
             'q': None,
@@ -54,9 +58,18 @@ class GoogleCustomSearch(object):
         for key, value in self._search_params_keys.items():
             params_value = params.get(key)
             if params_value:
+                # take user defined param value if defined
                 search_params[key] = params_value
             elif value:
+                # take default param value if defined
                 search_params[key] = value
+
+            if key == 'num':
+                # save the original number of num search parameter
+                self._search_param_num = copy.copy(int(search_params[key]))
+
+                # add 5 more to number of images to substitute false ones
+                search_params[key] = int(search_params[key]) + 5
 
         return search_params
 
@@ -73,10 +86,36 @@ class GoogleCustomSearch(object):
         res = self._query_google_api(search_params, cache_discovery)
 
         for image in res.get('items'):
+
+            # end if the number of iterations
+            # reaches the number parameter of search
+            if not self._search_param_num:
+                break
+
             try:
+                response = requests.head(image['link'], timeout=5)
+                content_length = response.headers.get('Content-Length')
+
                 # check if the url is valid
-                requests.head(image['link'], timeout=5)
-                yield image['link']
+                if response.status_code == 200 and \
+                        'image' in response.headers['Content-Type'] and \
+                        content_length:
+
+                    # calculate download chunk size based on image size
+                    self._fethch_resize_save.set_chunk_size(
+                        image['link'], content_length
+                    )
+
+                    # decrease images number counter
+                    self._search_param_num -= 1
+
+                    # if everything is ok, yield image url back
+                    yield image['link']
+
+                else:
+                    # validation failed, go with another image
+                    continue
+
             except requests.exceptions.ConnectTimeout:
                 pass
             except requests.exceptions.SSLError:

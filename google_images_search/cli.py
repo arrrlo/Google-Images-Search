@@ -12,7 +12,9 @@ from .google_api import GoogleBackendException
 @click.option('-c', '--custom_search_cx', help='Custom Search CX')
 def cli(ctx, developer_key, custom_search_cx):
     ctx.obj = {
-        'object': FetchResizeSave(developer_key, custom_search_cx)
+        'object': FetchResizeSave(
+            developer_key, custom_search_cx, progressbar_fn=None
+        )
     }
 
 
@@ -57,10 +59,6 @@ def search(ctx, query, num, safe, filetype, imagetype,
 
     click.clear()
 
-    cprint(figlet_format('Google Images Search', width=120), 'red')
-
-    click.echo('-'*120)
-
     try:
         ctx.obj['object'].search(search_params, download_path, width, height)
 
@@ -78,6 +76,3 @@ def search(ctx, query, num, safe, filetype, imagetype,
         click.secho('Error occurred trying to fetch '
                     'images from Google. Please try again.', fg='red')
         return
-
-    click.echo('-'*120)
-    click.echo()

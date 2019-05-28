@@ -1,5 +1,4 @@
 import os
-import shutil
 import curses
 import requests
 import threading
@@ -12,16 +11,32 @@ from .google_api import GoogleCustomSearch
 class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
-    def __init__(self, developer_key, custom_search_cx):
-        self._google_custom_search = GoogleCustomSearch(developer_key,
-                                                        custom_search_cx)
+    def __init__(self, developer_key, custom_search_cx,
+                 progressbar_fn=lambda url, progress: None):
+
+        # initialise google api
+        self._google_custom_search = GoogleCustomSearch(
+            developer_key, custom_search_cx, self)
+
+        self._stdscr = None
         self._search_result = list()
         self._global_lock = threading.Lock()
-        self._stdscr = curses.initscr()
-        self._step = 0
 
-        #curses.noecho()
-        #curses.cbreak()
+        # thread safe variables
+        self._chunk_sizes = dict()
+        self._terminal_lines = dict()
+        self._download_progress = dict()
+
+        # initially progress bar is disabled
+        # by setting empty lambda function
+        self._report_progress = progressbar_fn or self.__report_progress
+
+        # if user hasn't supplied custom defined
+        # progress bar function, use curses
+        if not progressbar_fn:
+            self._stdscr = curses.initscr()
+            curses.noecho()
+            curses.cbreak()
 
     def search(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=True):
@@ -35,26 +50,49 @@ class FetchResizeSave(object):
         :return: None
         """
 
+        i = 0
         threads = list()
         for url in self._google_custom_search.search(
                 search_params, cache_discovery
         ):
+            # initialise image object
             image = GSImage(self)
             image.url = url
 
+            # set thread safe variables
+            self._download_progress[url] = 0
+            self._terminal_lines[url] = i
+            i += 2
+
+            # set thread with function and arguments
             thread = threading.Thread(
                 target=self._download_and_resize,
                 args=(path_to_dir, image, width, height)
             )
+
+            # start thread
             thread.start()
+
+            # register thread
             threads.append(thread)
 
+        # wait for all threads to end here
         for thread in threads:
             thread.join()
 
-        curses.echo()
-        curses.nocbreak()
-        curses.endwin()
+        if self._stdscr:
+            curses.echo()
+            curses.nocbreak()
+            curses.endwin()
+
+    def set_chunk_size(self, url, content_size):
+        """Set images chunk size according to its size
+        :param url: image url
+        :param content_size: image size
+        :return: None
+        """
+
+        self._chunk_sizes[url] = int(int(content_size) / 100) + 1
 
     def _download_and_resize(self, path_to_dir, image, width, height):
         """Method used for threading
@@ -95,10 +133,7 @@ class FetchResizeSave(object):
 
         with open(path_to_image, 'wb+') as f:
             for chunk in self.get_raw_data(url):
-                #self.__class__.copy_to(chunk, f)
                 f.write(chunk)
-
-        self._step += 2
 
         return path_to_image
 
@@ -108,30 +143,17 @@ class FetchResizeSave(object):
         :return: raw image data
         """
 
-        progress = 0
-        image_length = requests.head(url, timeout=5).headers['Content-Length']
-        chunk_size = int(int(image_length)/100)+1
-
         with requests.get(url, stream=True) as req:
-            #req.raise_for_status()
-            #req.raw.decode_content = True
-            #return req.raw
+            for chunk in req.iter_content(chunk_size=self._chunk_sizes[url]):
 
-            for chunk in req.iter_content(chunk_size=chunk_size):
-                if chunk:  # filter out keep-alive new chunks
-                    progress += 1
-                    self._report_progress(self._step, url, progress)
+                # filter out keep-alive new chunks
+                if chunk:
+
+                    # report progress
+                    self._download_progress[url] += 1
+                    self._report_progress(url, self._download_progress[url])
+
                     yield chunk
-
-    @staticmethod
-    def copy_to(raw_data, obj):
-        """Copy raw image data to another object, preferably BytesIO
-        :param raw_data: raw image data
-        :param obj: BytesIO object
-        :return: None
-        """
-
-        shutil.copyfileobj(raw_data, obj)
 
     @staticmethod
     def resize(path_to_image, width, height):
@@ -148,12 +170,22 @@ class FetchResizeSave(object):
         img.save(path_to_image, img.format)
         fd_img.close()
 
-    def _report_progress(self, line, filename, progress):
-        self._stdscr.addstr(line, 0, "Downloading file: {0}".format(filename))
-        self._stdscr.addstr(line + 1, 0,
-                      "Total progress: [{1:100}] {0}%".format(progress,
-                                                             "#" * progress))
-        self._stdscr.refresh()
+    def __report_progress(self, url, progress):
+        """Prints a progress bar in terminal
+        :param url:
+        :param progress:
+        :return:
+        """
+
+        with self._global_lock:
+            self._stdscr.addstr(
+                self._terminal_lines[url], 0, "Downloading file: {0}".format(url)
+            )
+            self._stdscr.addstr(
+                self._terminal_lines[url] + 1, 0,
+                "Progress: [{1:100}] {0}%".format(progress, "#" * progress)
+            )
+            self._stdscr.refresh()
 
 
 class GSImage(object):
@@ -214,7 +246,7 @@ class GSImage(object):
         :return: raw data
         """
 
-        return self._fetch_resize_save.get_raw_data(self._url)
+        return b''.join(list(self._fetch_resize_save.get_raw_data(self._url)))
 
     def copy_to(self, obj, raw_data=None):
         """Copies raw image data to another object, preferably BytesIO
@@ -226,7 +258,7 @@ class GSImage(object):
         if not raw_data:
             raw_data = self.get_raw_data()
 
-        self._fetch_resize_save.__class__.copy_to(raw_data, obj)
+        obj.write(raw_data)
 
     def resize(self, width, height):
         """Resize the image

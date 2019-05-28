@@ -31,7 +31,7 @@ class TestGoogleApi(unittest.TestCase):
         }
         assert_params = {
             'q': 'test',
-            'num': 1,
+            'num': 6,
             'safe': 'off',
             'searchType': 'image'
         }
@@ -44,7 +44,7 @@ class TestGoogleApi(unittest.TestCase):
         }
         assert_params = {
             'q': 'test',
-            'num': 12,
+            'num': 17,
             'safe': 'off',
             'searchType': 'image',
             'imgDominantColor': 'black'
@@ -61,7 +61,17 @@ class TestGoogleApi(unittest.TestCase):
             'searchType': 'image',
             'imgDominantColor': 'black'
         }
-        self.assertEqual(self._api._search_params(params), params)
+        assert_params = {
+            'q': 'test',
+            'num': 6,
+            'safe': 'high',
+            'fileType': 'jpg',
+            'imgType': 'clipart',
+            'imgSize': 'huge',
+            'searchType': 'image',
+            'imgDominantColor': 'black'
+        }
+        self.assertEqual(self._api._search_params(params), assert_params)
 
 
 if __name__ == '__main__':
