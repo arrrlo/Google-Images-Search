@@ -35,8 +35,6 @@ class FetchResizeSave(object):
         # progress bar function, use curses
         if not progressbar_fn:
             self._stdscr = curses.initscr()
-            curses.noecho()
-            curses.cbreak()
 
     def search(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=True):
@@ -81,8 +79,6 @@ class FetchResizeSave(object):
             thread.join()
 
         if self._stdscr:
-            curses.echo()
-            curses.nocbreak()
             curses.endwin()
 
     def set_chunk_size(self, url, content_size):

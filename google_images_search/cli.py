@@ -1,6 +1,4 @@
 import click
-from termcolor import cprint
-from pyfiglet import figlet_format
 
 from .fetch_resize_save import FetchResizeSave
 from .google_api import GoogleBackendException

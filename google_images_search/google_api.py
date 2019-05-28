@@ -1,5 +1,4 @@
 import os
-import copy
 import requests
 from apiclient.discovery import build
 
@@ -17,7 +16,6 @@ class GoogleCustomSearch(object):
                                  os.environ.get('GCS_CX')
 
         self._google_build = None
-        self._search_param_num = 0
         self._fethch_resize_save = fethch_resize_save
 
         self._search_params_keys = {
@@ -64,13 +62,6 @@ class GoogleCustomSearch(object):
                 # take default param value if defined
                 search_params[key] = value
 
-            if key == 'num':
-                # save the original number of num search parameter
-                self._search_param_num = copy.copy(int(search_params[key]))
-
-                # add 5 more to number of images to substitute false ones
-                search_params[key] = int(search_params[key]) + 5
-
         return search_params
 
     def search(self, params, cache_discovery=True):
@@ -86,12 +77,6 @@ class GoogleCustomSearch(object):
         res = self._query_google_api(search_params, cache_discovery)
 
         for image in res.get('items'):
-
-            # end if the number of iterations
-            # reaches the number parameter of search
-            if not self._search_param_num:
-                break
-
             try:
                 response = requests.head(image['link'], timeout=5)
                 content_length = response.headers.get('Content-Length')
@@ -105,9 +90,6 @@ class GoogleCustomSearch(object):
                     self._fethch_resize_save.set_chunk_size(
                         image['link'], content_length
                     )
-
-                    # decrease images number counter
-                    self._search_param_num -= 1
 
                     # if everything is ok, yield image url back
                     yield image['link']
