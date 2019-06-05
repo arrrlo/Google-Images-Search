@@ -58,7 +58,13 @@ class FetchResizeSave(object):
             os.makedirs(path_to_dir)
 
         raw_data = self.__class__.get_raw_data(url)
-        path_to_image = os.path.join(path_to_dir, url.split('/')[-1].split('?')[0])
+
+        raw_filename = url.split('/')[-1].split('?')[0]
+        basename, ext = os.path.splitext(raw_filename)
+        filename = "".join(x for x in basename if x.isalnum()) + ext
+
+        path_to_image = os.path.join(path_to_dir, filename)
+
         with open(path_to_image, 'wb') as f:
             self.__class__.copy_to(raw_data, f)
 
