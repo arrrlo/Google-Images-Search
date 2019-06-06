@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.8
+
+### Fixed in 0.3.8
+-   non-alphanumeric characters removed from file names which are not valid characters in windows file names (change made by [@sebastianchr](https://github.com/sebastianchr)
+
 ## 0.3.7
 
 ### Fixed in 0.3.7
