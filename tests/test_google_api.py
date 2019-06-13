@@ -31,7 +31,7 @@ class TestGoogleApi(unittest.TestCase):
         }
         assert_params = {
             'q': 'test',
-            'num': 6,
+            'num': 1,
             'safe': 'off',
             'searchType': 'image'
         }
@@ -44,7 +44,7 @@ class TestGoogleApi(unittest.TestCase):
         }
         assert_params = {
             'q': 'test',
-            'num': 17,
+            'num': 12,
             'safe': 'off',
             'searchType': 'image',
             'imgDominantColor': 'black'
@@ -63,7 +63,7 @@ class TestGoogleApi(unittest.TestCase):
         }
         assert_params = {
             'q': 'test',
-            'num': 6,
+            'num': 1,
             'safe': 'high',
             'fileType': 'jpg',
             'imgType': 'clipart',

@@ -47,12 +47,14 @@ class TestFetchResizeSave(unittest.TestCase):
             self._frs._google_custom_search, GoogleCustomSearch
         ))
         self.assertEqual(self._frs._search_result, [])
+        self.assertEqual(self._frs._progress, False)
+
+        """self._frs = FetchResizeSave(self._api_key, self._api_cx, progress=True)
+
         self.assertEqual(self._frs._chunk_sizes, {})
         self.assertEqual(self._frs._terminal_lines, {})
         self.assertEqual(self._frs._download_progress, {})
-        self.assertTrue(isinstance(
-            self._frs._report_progress, type(lambda url, progress: None)
-        ))
+        self.assertEqual(self._frs._report_progress, None)"""
 
     def test_search_url(self):
         self._frs.search({'num': 2})

@@ -11,7 +11,7 @@ from .google_api import GoogleBackendException
 def cli(ctx, developer_key, custom_search_cx):
     ctx.obj = {
         'object': FetchResizeSave(
-            developer_key, custom_search_cx, progressbar_fn=None
+            developer_key, custom_search_cx, progress=True
         )
     }
 
@@ -60,7 +60,7 @@ def search(ctx, query, num, safe, filetype, imagetype,
     try:
         ctx.obj['object'].search(search_params, download_path, width, height)
 
-        for _, image in enumerate(ctx.obj['object'].results()):
+        for image in ctx.obj['object'].results():
             click.echo(image.url)
             if image.path:
                 click.secho(image.path, fg='blue')

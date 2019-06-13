@@ -12,29 +12,30 @@ class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
     def __init__(self, developer_key, custom_search_cx,
-                 progressbar_fn=lambda url, progress: None):
+                 progressbar_fn=None, progress=False):
 
         # initialise google api
         self._google_custom_search = GoogleCustomSearch(
             developer_key, custom_search_cx, self)
 
-        self._stdscr = None
         self._search_result = list()
-        self._global_lock = threading.Lock()
 
-        # thread safe variables
+        self._stdscr = None
+        self._progress = False
         self._chunk_sizes = dict()
         self._terminal_lines = dict()
         self._download_progress = dict()
+        self._report_progress = progressbar_fn
 
-        # initially progress bar is disabled
-        # by setting empty lambda function
-        self._report_progress = progressbar_fn or self.__report_progress
-
-        # if user hasn't supplied custom defined
-        # progress bar function, use curses
-        if not progressbar_fn:
-            self._stdscr = curses.initscr()
+        if progressbar_fn:
+            # user nserted progressbar fn
+            self._progress = True
+        else:
+            if progress:
+                # initialise internal progressbar
+                self._progress = True
+                self._stdscr = curses.initscr()
+                self._report_progress = self.__report_progress
 
     def search(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=True):
@@ -78,8 +79,9 @@ class FetchResizeSave(object):
         for thread in threads:
             thread.join()
 
-        if self._stdscr:
-            curses.endwin()
+        if self._progress:
+            if self._stdscr:
+                curses.endwin()
 
     def set_chunk_size(self, url, content_size):
         """Set images chunk size according to its size
@@ -123,9 +125,11 @@ class FetchResizeSave(object):
         if not os.path.exists(path_to_dir):
             os.makedirs(path_to_dir)
 
-        path_to_image = os.path.join(
-            path_to_dir, url.split('/')[-1].split('?')[0]
-        )
+        raw_filename = url.split('/')[-1].split('?')[0]
+        basename, ext = os.path.splitext(raw_filename)
+        filename = "".join(x for x in basename if x.isalnum()) + ext
+
+        path_to_image = os.path.join(path_to_dir, filename)
 
         with open(path_to_image, 'wb+') as f:
             for chunk in self.get_raw_data(url):
@@ -146,8 +150,10 @@ class FetchResizeSave(object):
                 if chunk:
 
                     # report progress
-                    self._download_progress[url] += 1
-                    self._report_progress(url, self._download_progress[url])
+                    if self._progress:
+                        self._download_progress[url] += 1
+                        if self._download_progress[url] <= 100:
+                            self._report_progress(url, self._download_progress[url])
 
                     yield chunk
 
@@ -173,15 +179,14 @@ class FetchResizeSave(object):
         :return:
         """
 
-        with self._global_lock:
-            self._stdscr.addstr(
-                self._terminal_lines[url], 0, "Downloading file: {0}".format(url)
-            )
-            self._stdscr.addstr(
-                self._terminal_lines[url] + 1, 0,
-                "Progress: [{1:100}] {0}%".format(progress, "#" * progress)
-            )
-            self._stdscr.refresh()
+        self._stdscr.addstr(
+            self._terminal_lines[url], 0, "Downloading file: {0}".format(url)
+        )
+        self._stdscr.addstr(
+            self._terminal_lines[url] + 1, 0,
+            "Progress: [{1:100}] {0}%".format(progress, "#" * progress)
+        )
+        self._stdscr.refresh()
 
 
 class GSImage(object):
