@@ -49,12 +49,13 @@ class TestFetchResizeSave(unittest.TestCase):
         self.assertEqual(self._frs._search_result, [])
         self.assertEqual(self._frs._progress, False)
 
-        """self._frs = FetchResizeSave(self._api_key, self._api_cx, progress=True)
+        frs = FetchResizeSave(self._api_key, self._api_cx,
+                              progressbar_fn=lambda x, y: None, progress=True)
 
-        self.assertEqual(self._frs._chunk_sizes, {})
-        self.assertEqual(self._frs._terminal_lines, {})
-        self.assertEqual(self._frs._download_progress, {})
-        self.assertEqual(self._frs._report_progress, None)"""
+        self.assertEqual(frs._chunk_sizes, {})
+        self.assertEqual(frs._terminal_lines, {})
+        self.assertEqual(frs._download_progress, {})
+        self.assertNotEqual(frs._report_progress, None)
 
     def test_search_url(self):
         self._frs.search({'num': 2})
