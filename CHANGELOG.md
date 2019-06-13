@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0
+
+### Added in 1.0.0
+-   multithreaded images downloading
+-   download progress bars
+-   external progress bar insertion 
+
 ## 0.3.8
 
 ### Fixed in 0.3.8

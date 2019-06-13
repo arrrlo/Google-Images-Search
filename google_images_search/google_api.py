@@ -7,7 +7,8 @@ class GoogleCustomSearch(object):
     """Wrapper class for Google images search api"""
 
     def __init__(self, developer_key=None,
-                 custom_search_cx=None):
+                 custom_search_cx=None,
+                 fethch_resize_save=None):
 
         self._developer_key = developer_key or \
                               os.environ.get('GCS_DEVELOPER_KEY')
@@ -15,6 +16,7 @@ class GoogleCustomSearch(object):
                                  os.environ.get('GCS_CX')
 
         self._google_build = None
+        self._fethch_resize_save = fethch_resize_save
 
         self._search_params_keys = {
             'q': None,
@@ -54,8 +56,10 @@ class GoogleCustomSearch(object):
         for key, value in self._search_params_keys.items():
             params_value = params.get(key)
             if params_value:
+                # take user defined param value if defined
                 search_params[key] = params_value
             elif value:
+                # take default param value if defined
                 search_params[key] = value
 
         return search_params
@@ -70,17 +74,33 @@ class GoogleCustomSearch(object):
 
         search_params = self._search_params(params)
 
-        try:
-            res = self._query_google_api(search_params, cache_discovery)
-        except:
-            raise GoogleBackendException()
+        res = self._query_google_api(search_params, cache_discovery)
 
         for image in res.get('items'):
             try:
-                check = requests.get(image['link'], timeout=5)
-                if check.status_code == 200:
+                response = requests.head(image['link'], timeout=5)
+                content_length = response.headers.get('Content-Length')
+
+                # check if the url is valid
+                if response.status_code == 200 and \
+                        'image' in response.headers['Content-Type'] and \
+                        content_length:
+
+                    # calculate download chunk size based on image size
+                    self._fethch_resize_save.set_chunk_size(
+                        image['link'], content_length
+                    )
+
+                    # if everything is ok, yield image url back
                     yield image['link']
+
+                else:
+                    # validation failed, go with another image
+                    continue
+
             except requests.exceptions.ConnectTimeout:
+                pass
+            except requests.exceptions.SSLError:
                 pass
 
 

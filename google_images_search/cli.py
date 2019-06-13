@@ -1,6 +1,4 @@
 import click
-from termcolor import cprint
-from pyfiglet import figlet_format
 
 from .fetch_resize_save import FetchResizeSave
 from .google_api import GoogleBackendException
@@ -12,7 +10,9 @@ from .google_api import GoogleBackendException
 @click.option('-c', '--custom_search_cx', help='Custom Search CX')
 def cli(ctx, developer_key, custom_search_cx):
     ctx.obj = {
-        'object': FetchResizeSave(developer_key, custom_search_cx)
+        'object': FetchResizeSave(
+            developer_key, custom_search_cx, progress=True
+        )
     }
 
 
@@ -57,14 +57,10 @@ def search(ctx, query, num, safe, filetype, imagetype,
 
     click.clear()
 
-    cprint(figlet_format('Google Images Search', width=120), 'red')
-
-    click.echo('-'*120)
-
     try:
         ctx.obj['object'].search(search_params, download_path, width, height)
 
-        for _, image in enumerate(ctx.obj['object'].results()):
+        for image in ctx.obj['object'].results():
             click.echo(image.url)
             if image.path:
                 click.secho(image.path, fg='blue')
@@ -78,6 +74,3 @@ def search(ctx, query, num, safe, filetype, imagetype,
         click.secho('Error occurred trying to fetch '
                     'images from Google. Please try again.', fg='red')
         return
-
-    click.echo('-'*120)
-    click.echo()

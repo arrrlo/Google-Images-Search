@@ -84,7 +84,6 @@ _search_params = {
     'fileType': 'jpg|gif|png',
     'imgType': 'clipart|face|lineart|news|photo',
     'imgSize': 'huge|icon|large|medium|small|xlarge|xxlarge',
-    'searchType': 'image',
     'imgDominantColor': 'black|blue|brown|gray|green|pink|purple|teal|white|yellow'
 }
 
@@ -102,6 +101,21 @@ gis.search(search_params=_search_params)
 for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
+```
+
+## Inserting custom progressbar function
+
+```python
+from google_images_search import GoogleImagesSearch
+
+def my_progressbar(url, progress):
+    print(url + ' ' + progress + '%')
+
+gis = GoogleImagesSearch(
+    'your_dev_api_key', 'your_project_cx', progressbar_fn=my_progressbar
+)
+
+...
 ```
 
 ## Saving to a BytesIO object
