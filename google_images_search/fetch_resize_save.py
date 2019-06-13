@@ -52,7 +52,7 @@ class FetchResizeSave(object):
         i = 0
         threads = list()
         for url in self._google_custom_search.search(
-                search_params, cache_discovery
+            search_params, cache_discovery
         ):
             # initialise image object
             image = GSImage(self)
