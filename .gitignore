@@ -4,3 +4,6 @@
 /dist/
 /google_images_search/
 /tests/__pycache__/
+/.DS_Store
+.venv
+/tests/test_my.py

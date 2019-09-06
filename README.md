@@ -12,17 +12,15 @@
 ![GitHub](https://img.shields.io/github/license/arrrlo/Google-Images-Search.svg?color=blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/arrrlo/Google-Images-Search.svg?color=blue)
 
-## Installation
+## Installation  
 
 Before you continue you need to setup your Google developers account and project:  
 
-[https://console.developers.google.com](https://console.developers.google.com)
-(Among all of the Google APIs enable "Custom Search API" for your project)
+-   Visit [https://console.developers.google.com](https://console.developers.google.com) and among all of the Google APIs enable "Custom Search API" for your project.  
 
-[https://cse.google.com/cse/all](https://cse.google.com/cse/all)
-(In the web form where you create/edit your custom search engine enable "Image search" option and and for "Sites to search" option select "Search the entire web but emphasize included sites")
+-   Visit [https://cse.google.com/cse/all](https://cse.google.com/cse/all) and in the web form where you create/edit your custom search engine enable "Image search" option and for "Sites to search" option select "Search the entire web but emphasize included sites".  
 
-After setting up you Google developers account and project you should have your developers API key and project CX
+After setting up you Google developers account and project you should have your developers API key and project CX.  
 
 Install package from pypi.org:  
 
@@ -30,7 +28,7 @@ Install package from pypi.org:
 > pip install Google-Images-Search
 ```
 
-## CLI usage
+## CLI usage  
 
 ```bash
 # without environment variables:
@@ -65,7 +63,7 @@ Install package from pypi.org:
 > gimages search -q puppies -d /path/ -w 500 -h 500
 ```
 
-## Programmatic usage
+## Programmatic usage  
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -103,7 +101,7 @@ for image in gis.results():
     image.resize(500, 500)
 ```
 
-## Inserting custom progressbar function
+## Inserting custom progressbar function  
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -118,7 +116,7 @@ gis = GoogleImagesSearch(
 ...
 ```
 
-## Saving to a BytesIO object
+## Saving to a BytesIO object  
 
 ```python
 from google_images_search import GoogleImagesSearch

@@ -1,31 +1,37 @@
 # Changelog
 
+## 1.0.1  
+
+### Fixed in 1.0.1  
+
+-   Sometimes google api desn't return 'items' in response and code breaks. 
+
 ## 1.0.0
 
 ### Added in 1.0.0
--   multithreaded images downloading
--   download progress bars
--   external progress bar insertion 
+-   Multithreaded images downloading
+-   Download progress bars
+-   External progress bar insertion 
 
 ## 0.3.8
 
 ### Fixed in 0.3.8
--   non-alphanumeric characters removed from file names which are not valid characters in windows file names (change made by [@sebastianchr](https://github.com/sebastianchr)
+-   Non-alphanumeric characters removed from file names which are not valid characters in windows file names (change made by [@sebastianchr](https://github.com/sebastianchr)
 
 ## 0.3.7
 
 ### Fixed in 0.3.7
--   code formatted.
+-   Code formatted.
 
 ## 0.3.6
 
 ### Added in 0.3.6
--   cache_discovery option forward fix.
+-   Cache_discovery option forward fix.
 
 ## 0.3.5
 
 ### Added in 0.3.5
--   cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
+-   Cache_discovery option for search method to control file_cache (change made by [@maredov](https://github.com/marodev)).
 
 ## 0.3.4
 

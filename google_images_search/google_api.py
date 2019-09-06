@@ -76,7 +76,7 @@ class GoogleCustomSearch(object):
 
         res = self._query_google_api(search_params, cache_discovery)
 
-        for image in res.get('items'):
+        for image in res.get('items', []):
             try:
                 response = requests.head(image['link'], timeout=5)
                 content_length = response.headers.get('Content-Length')
