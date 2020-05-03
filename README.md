@@ -74,10 +74,10 @@ gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
 
 # example: GoogleImagesSearch('ABcDeFGhiJKLmnopqweRty5asdfghGfdSaS4abC', '012345678987654321012:abcde_fghij')
 
-#define search params:
+# define search params:
 _search_params = {
     'q': '...',
-    'num': 1-50,
+    'num': 10,
     'safe': 'high|medium|off',
     'fileType': 'jpg|gif|png',
     'imgType': 'clipart|face|lineart|news|photo',
@@ -94,11 +94,26 @@ gis.search(search_params=_search_params, path_to_dir='/path/')
 # this will search, download and resize:
 gis.search(search_params=_search_params, path_to_dir='/path/', width=500, height=500)
 
-# search first, then download and resize afterwards
+# search first, then download and resize afterwards:
 gis.search(search_params=_search_params)
 for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
+
+# take next 10 images from Google images search:
+# (this will take images from 11 to 20)
+gis.next_page()
+for image in gis.results():
+    ...
+
+# or if you want to do it manually just use "start" search parameter:
+# (this will take images from 21 to 30)
+_search_params = {
+    ...
+    'num': 10,
+    'start': 21,
+    ...
+}
 ```
 
 ## Inserting custom progressbar function  

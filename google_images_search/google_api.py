@@ -22,6 +22,7 @@ class GoogleCustomSearch(object):
             'q': None,
             'searchType': 'image',
             'num': 1,
+            'start': 1,
             'imgType': None,
             'imgSize': None,
             'fileType': None,

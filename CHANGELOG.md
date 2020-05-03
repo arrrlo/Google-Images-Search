@@ -1,4 +1,10 @@
-# Changelog  
+# Changelog
+
+## 1.1.0
+
+### Added in 1.1.0
+
+-   Google api search apgination using next searxh parameter (change suggested by [@Uskompuf](https://github.com/Uskompuf)
 
 ## 1.0.1  
 
