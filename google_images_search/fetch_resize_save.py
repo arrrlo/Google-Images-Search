@@ -68,7 +68,7 @@ class FetchResizeSave(object):
                self._cache_discovery
 
     def search(self, search_params, path_to_dir=False, width=None,
-               height=None, cache_discovery=True):
+               height=None, cache_discovery=True, clear_prev_results=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
@@ -78,6 +78,9 @@ class FetchResizeSave(object):
         :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
+
+        if clear_prev_results:
+            self._search_result = list()
 
         self._set_data(
             search_params, path_to_dir, width, height, cache_discovery
