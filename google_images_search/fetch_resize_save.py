@@ -18,14 +18,16 @@ class FetchResizeSave(object):
         self._google_custom_search = GoogleCustomSearch(
             developer_key, custom_search_cx, self)
 
-        self._search_result = list()
+        self._search_result = []
 
         self._stdscr = None
         self._progress = False
-        self._chunk_sizes = dict()
-        self._terminal_lines = dict()
-        self._download_progress = dict()
+        self._chunk_sizes = {}
+        self._terminal_lines = {}
+        self._download_progress = {}
         self._report_progress = progressbar_fn
+
+        self._set_data()
 
         if progressbar_fn:
             # user nserted progressbar fn
@@ -36,6 +38,34 @@ class FetchResizeSave(object):
                 self._progress = True
                 self._stdscr = curses.initscr()
                 self._report_progress = self.__report_progress
+
+    def _set_data(self, search_params=None, path_to_dir=False,
+                  width=None, height=None, cache_discovery=True):
+        """Set data for Google api search, save and resize
+        :param search_params: parameters for Google API Search
+        :param path_to_dir: path where the images should be downloaded
+        :param width: crop width of the images
+        :param height: crop height of the images
+        :param cache_discovery: whether or not to cache the discovery doc
+        :return: None
+        """
+
+        self._width = width
+        self._height = height
+        self._path_to_dir = path_to_dir
+        self._search_params = search_params
+        self._cache_discovery = cache_discovery
+
+    def _get_data(self):
+        """Get data for Google api search, save and resize
+        :return: tuple
+        """
+
+        return self._search_params, \
+               self._path_to_dir, \
+               self._width,\
+               self._height,\
+               self._cache_discovery
 
     def search(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=True):
@@ -49,8 +79,12 @@ class FetchResizeSave(object):
         :return: None
         """
 
+        self._set_data(
+            search_params, path_to_dir, width, height, cache_discovery
+        )
+
         i = 0
-        threads = list()
+        threads = []
         for url in self._google_custom_search.search(
             search_params, cache_discovery
         ):
@@ -82,6 +116,20 @@ class FetchResizeSave(object):
         if self._progress:
             if self._stdscr:
                 curses.endwin()
+
+    def next_page(self):
+        """Get next batch of images.
+        Number of images is defined with num search parameter.
+        :return: search results
+        """
+
+        start = self._search_params.get('start', 1) + \
+                self._search_params.get('num', 1)
+        self._search_params['start'] = start
+        self._search_result = []
+
+        self.search(*self._get_data())
+
 
     def set_chunk_size(self, url, content_size):
         """Set images chunk size according to its size

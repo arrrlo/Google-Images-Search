@@ -18,6 +18,7 @@ class TestGoogleApi(unittest.TestCase):
             'q': None,
             'searchType': 'image',
             'num': 1,
+            'start': 1,
             'imgType': None,
             'imgSize': None,
             'fileType': None,
@@ -32,6 +33,7 @@ class TestGoogleApi(unittest.TestCase):
         assert_params = {
             'q': 'test',
             'num': 1,
+            'start': 1,
             'safe': 'off',
             'searchType': 'image'
         }
@@ -45,6 +47,7 @@ class TestGoogleApi(unittest.TestCase):
         assert_params = {
             'q': 'test',
             'num': 12,
+            'start': 1,
             'safe': 'off',
             'searchType': 'image',
             'imgDominantColor': 'black'
@@ -54,6 +57,7 @@ class TestGoogleApi(unittest.TestCase):
         params = {
             'q': 'test',
             'num': 1,
+            'start': 1,
             'safe': 'high',
             'fileType': 'jpg',
             'imgType': 'clipart',
@@ -64,6 +68,7 @@ class TestGoogleApi(unittest.TestCase):
         assert_params = {
             'q': 'test',
             'num': 1,
+            'start': 1,
             'safe': 'high',
             'fileType': 'jpg',
             'imgType': 'clipart',
