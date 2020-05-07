@@ -89,6 +89,7 @@ class FetchResizeSave(object):
         self._set_data(
             search_params, path_to_dir, width, height, cache_discovery
         )
+        self._search_result = []
 
         # number of images required from lib user is important
         # save it only when searching for the first time
@@ -165,9 +166,7 @@ class FetchResizeSave(object):
         """
 
         self._page += 1
-        self._search_result = []
         self.search(*self._get_data())
-
 
     def set_chunk_size(self, url, content_size):
         """Set images chunk size according to its size
