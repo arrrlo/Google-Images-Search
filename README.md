@@ -14,13 +14,17 @@
 
 ## [Installation](#installation)
 
-Before you continue you need to setup your Google developers account and project:  
+To be able to use this library, you need to enable Google Custom Search API, generate API key credentials and set a project:
 
--   Visit [https://console.developers.google.com](https://console.developers.google.com) and among all of the Google APIs enable "Custom Search API" for your project.  
+-   Visit [https://console.developers.google.com](https://console.developers.google.com) and create a project.
+
+-   Visit [https://console.developers.google.com/apis/library/customsearch.googleapis.com](https://console.developers.google.com/apis/library/customsearch.googleapis.com) and enable "Custom Search API" for your project.
+
+-   Visit [https://console.developers.google.com/apis/credentials](https://console.developers.google.com/apis/credentials) and generate API key credentials for your project.
 
 -   Visit [https://cse.google.com/cse/all](https://cse.google.com/cse/all) and in the web form where you create/edit your custom search engine enable "Image search" option and for "Sites to search" option select "Search the entire web but emphasize included sites".  
 
-After setting up you Google developers account and project you should have your developers API key and project CX.  
+After setting up your Google developers account and project you should have been provided with developers API key and project CX.
 
 Install package from pypi.org:  
 
@@ -68,11 +72,9 @@ Install package from pypi.org:
 ```python
 from google_images_search import GoogleImagesSearch
 
-# if you don't enter api key and cx, the package will try to search
-# them from environment variables GCS_DEVELOPER_KEY and GCS_CX
+# you can provide API key and CX using arguments,
+# or you can set environment variables: GCS_DEVELOPER_KEY, GCS_CX
 gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
-
-# example: GoogleImagesSearch('ABcDeFGhiJKLmnopqweRty5asdfghGfdSaS4abC', '012345678987654321012:abcde_fghij')
 
 # define search params:
 _search_params = {
@@ -104,8 +106,8 @@ for image in gis.results():
 ## [Paging](#paging)
 
 Google's API limit is 10 images per request.  
-So if you want 123 images, it will be divided internally into 13 requests.  
-Bear in mind that getting 123 images will take a bit more time if the image validation is enabled.
+That means if you want 123 images, it will be divided internally into 13 requests.  
+Keep in mind that getting 123 images will take a bit more time if the image validation is enabled.
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -135,10 +137,11 @@ _search_params = {
 
 ## [Image validation](#image-validation)
 
-Every image url is validated by default. That means that every image url will be checked if the headers can be fetched and that are valid.  
-The benefit is that you don't need to wary about which image url is valid or not.  
-The negative of that is time needed to validate.  
-You can turn validation off.
+Every image URL is validated by default.  
+That means that every image URL will be checked if the headers can be fetched and validated.  
+With that you don't need to wary about which image URL is actually downloadable or not.  
+The downside is the time needed to validate.  
+If you prefer, you can turn it off.
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -170,7 +173,7 @@ from io import BytesIO
 from PIL import Image
 
 # in this case we're using PIL to keep the BytesIO as an image object
-# this way we don't have to wait for disk save / write times
+# that way we don't have to wait for disk save / write times
 # the image is simply kept in memory
 # this example should display 3 pictures of puppies!
 
