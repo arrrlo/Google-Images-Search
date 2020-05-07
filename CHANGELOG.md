@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1
+
+### Added in 1.1.1
+
+-   Automatic paging (change suggested by [@Uskompuf](https://github.com/Uskompuf)
+-   Image validation enable/disable
+-   Multithreaded image validation
+
+### Fixed in 1.1.1
+
+-   Better exception handling during image check timeout.
+
 ## 1.1.0
 
 ### Added in 1.1.0

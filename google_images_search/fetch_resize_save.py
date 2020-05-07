@@ -8,17 +8,21 @@ from resizeimage import resizeimage
 from .google_api import GoogleCustomSearch
 
 
+IMAGES_NUM_LIMIT = 10
+
+
 class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
     def __init__(self, developer_key, custom_search_cx,
-                 progressbar_fn=None, progress=False):
+                 progressbar_fn=None, progress=False, validate_images=True):
 
         # initialise google api
         self._google_custom_search = GoogleCustomSearch(
             developer_key, custom_search_cx, self)
 
         self._search_result = []
+        self.validate_images = validate_images
 
         self._stdscr = None
         self._progress = False
@@ -28,6 +32,9 @@ class FetchResizeSave(object):
         self._report_progress = progressbar_fn
 
         self._set_data()
+
+        self._page = 1
+        self._number_of_images = 1
 
         if progressbar_fn:
             # user nserted progressbar fn
@@ -68,7 +75,7 @@ class FetchResizeSave(object):
                self._cache_discovery
 
     def search(self, search_params, path_to_dir=False, width=None,
-               height=None, cache_discovery=True):
+               height=None, cache_discovery=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
@@ -82,6 +89,40 @@ class FetchResizeSave(object):
         self._set_data(
             search_params, path_to_dir, width, height, cache_discovery
         )
+
+        # number of images required from lib user is important
+        # save it only when searching for the first time
+        # it will change if it's bigger then then limit number (10)
+        if self._search_params.get('start', 1) == 1:
+            self._number_of_images = search_params.get('num', 1)
+
+        start = self._number_of_images * (self._page - 1)
+        end = self._number_of_images * self._page
+
+        for i, page in enumerate(range(start, end, IMAGES_NUM_LIMIT)):
+            start = page+1
+
+            if self._number_of_images > IMAGES_NUM_LIMIT*(i+1):
+                num = IMAGES_NUM_LIMIT
+            else:
+                num = self._number_of_images % IMAGES_NUM_LIMIT
+
+            self._search_params['start'] = start
+            self._search_params['num'] = num
+
+            self._search_images(*self._get_data())
+
+    def _search_images(self, search_params, path_to_dir=False, width=None,
+               height=None, cache_discovery=True):
+        """Fetched images using Google API and does the download and resize
+        if path_to_dir and width and height variables are provided.
+        :param search_params: parameters for Google API Search
+        :param path_to_dir: path where the images should be downloaded
+        :param width: crop width of the images
+        :param height: crop height of the images
+        :param cache_discovery: whether or not to cache the discovery doc
+        :return: None
+        """
 
         i = 0
         threads = []
@@ -123,11 +164,8 @@ class FetchResizeSave(object):
         :return: search results
         """
 
-        start = self._search_params.get('start', 1) + \
-                self._search_params.get('num', 1)
-        self._search_params['start'] = start
+        self._page += 1
         self._search_result = []
-
         self.search(*self._get_data())
 
 
@@ -192,11 +230,10 @@ class FetchResizeSave(object):
         """
 
         with requests.get(url, stream=True) as req:
-            for chunk in req.iter_content(chunk_size=self._chunk_sizes[url]):
+            for chunk in req.iter_content(chunk_size=self._chunk_sizes.get(url)):
 
                 # filter out keep-alive new chunks
                 if chunk:
-
                     # report progress
                     if self._progress:
                         self._download_progress[url] += 1

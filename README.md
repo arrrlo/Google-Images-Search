@@ -12,7 +12,7 @@
 ![GitHub](https://img.shields.io/github/license/arrrlo/Google-Images-Search.svg?color=blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/arrrlo/Google-Images-Search.svg?color=blue)
 
-## Installation  
+## [Installation](#installation)
 
 Before you continue you need to setup your Google developers account and project:  
 
@@ -28,7 +28,7 @@ Install package from pypi.org:
 > pip install Google-Images-Search
 ```
 
-## CLI usage  
+## [CLI usage](#cli-usage)
 
 ```bash
 # without environment variables:
@@ -63,7 +63,7 @@ Install package from pypi.org:
 > gimages search -q puppies -d /path/ -w 500 -h 500
 ```
 
-## Programmatic usage  
+## [Programmatic usage](#programmatic-usage)
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -99,15 +99,32 @@ gis.search(search_params=_search_params)
 for image in gis.results():
     image.download('/path/')
     image.resize(500, 500)
+```
 
-# take next 10 images from Google images search:
-# (this will take images from 11 to 20)
+## [Paging](#paging)
+
+Google's API limit is 10 images per request.  
+So if you want 123 images, it will be divided internally into 13 requests.  
+Bear in mind that getting 123 images will take a bit more time if the image validation is enabled.
+
+```python
+from google_images_search import GoogleImagesSearch
+
+gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
+_search_params = {
+    'q': '...',
+    'num': 123,
+}
+
+# get first 123 images:
+gis.search(search_params=_search_params)
+
+# take next 123 images from Google images search:
 gis.next_page()
 for image in gis.results():
     ...
 
 # or if you want to do it manually just use "start" search parameter:
-# (this will take images from 21 to 30)
 _search_params = {
     ...
     'num': 10,
@@ -116,7 +133,21 @@ _search_params = {
 }
 ```
 
-## Inserting custom progressbar function  
+## [Image validation](#image-validation)
+
+Every image url is validated by default. That means that every image url will be checked if the headers can be fetched and that are valid.  
+The benefit is that you don't need to wary about which image url is valid or not.  
+The negative of that is time needed to validate.  
+You can turn validation off.
+
+```python
+from google_images_search import GoogleImagesSearch
+
+# turn the validation off with "validate_images" agrument
+gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx', validate_images=False)
+```
+
+## [Inserting custom progressbar function](#progressbar)
 
 ```python
 from google_images_search import GoogleImagesSearch
@@ -131,7 +162,7 @@ gis = GoogleImagesSearch(
 ...
 ```
 
-## Saving to a BytesIO object  
+## [Saving to a BytesIO object](#bytes-io)
 
 ```python
 from google_images_search import GoogleImagesSearch

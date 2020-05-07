@@ -57,6 +57,15 @@ class TestFetchResizeSave(unittest.TestCase):
         self.assertEqual(frs._download_progress, {})
         self.assertNotEqual(frs._report_progress, None)
 
+        self.assertEqual(frs._width, None)
+        self.assertEqual(frs._height, None)
+        self.assertEqual(frs._path_to_dir, False)
+        self.assertEqual(frs._search_params, None)
+        self.assertEqual(frs._cache_discovery, True)
+
+        self.assertEqual(frs._page, 1)
+        self.assertEqual(frs._number_of_images, 1)
+
     def test_search_url(self):
         self._frs.search({'num': 2})
         for i, item in enumerate(self._frs.results()):
@@ -92,6 +101,17 @@ class TestFetchResizeSave(unittest.TestCase):
             image.copy_to(my_bytes_io, raw_image_data)
             image.copy_to(my_bytes_io)
             my_bytes_io.seek(0)
+
+    def test_paging(self):
+        self._frs.search({'num': 5})
+        self.assertEqual(self._frs._search_params, {'num': 5, 'start': 1})
+        self.assertEqual(self._frs._page, 1)
+        self.assertEqual(self._frs._number_of_images, 5)
+
+        self._frs.next_page()
+        self.assertEqual(self._frs._search_params, {'num': 5, 'start': 6})
+        self.assertEqual(self._frs._page, 2)
+        self.assertEqual(self._frs._number_of_images, 5)
 
 
 if __name__ == '__main__':
