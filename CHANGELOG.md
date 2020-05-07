@@ -6,7 +6,6 @@
 
 -   Automatic paging (change suggested by [@Uskompuf](https://github.com/Uskompuf)
 -   Image validation enable/disable
--   Multithreaded image validation
 
 ### Fixed in 1.1.1
 

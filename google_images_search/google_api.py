@@ -66,7 +66,7 @@ class GoogleCustomSearch(object):
 
         return search_params
 
-    def search(self, params, cache_discovery=True):
+    def search(self, params, cache_discovery=False):
         """Search for images and returns
         them using generator object
         :param params: search params
@@ -74,49 +74,33 @@ class GoogleCustomSearch(object):
         :return: image list
         """
 
-        images = []
-        threads = []
         search_params = self._search_params(params)
         res = self._query_google_api(search_params, cache_discovery)
 
-        def _validate_image(_image):
-            try:
-                response = requests.head(_image['link'], timeout=5)
-                content_length = response.headers.get('Content-Length')
-
-                # check if the url is valid
-                if response.status_code == 200 and \
-                        'image' in response.headers['Content-Type'] and \
-                        content_length:
-
-                    # calculate download chunk size based on image size
-                    self._fetch_resize_save.set_chunk_size(
-                        _image['link'], content_length
-                    )
-
-                    # if everything is ok, save image url in list
-                    images.append(_image['link'])
-
-            except requests.exceptions.ConnectTimeout:
-                pass
-            except requests.exceptions.ReadTimeout:
-                pass
-            except requests.exceptions.SSLError:
-                pass
-
         for image in res.get('items', []):
             if self._fetch_resize_save.validate_images:
-                thread = threading.Thread(target=_validate_image, args=(image,))
-                thread.start()
-                threads.append(thread)
-            else:
-                images.append(image['link'])
+                try:
+                    response = requests.head(image['link'], timeout=5)
+                    content_length = response.headers.get('Content-Length')
 
-        if self._fetch_resize_save.validate_images:
-            for thread in threads:
-                thread.join()
+                    # check if the url is valid
+                    if response.status_code == 200 and \
+                            'image' in response.headers['Content-Type'] and \
+                            content_length:
+                        # calculate download chunk size based on image size
+                        self._fetch_resize_save.set_chunk_size(
+                            image['link'], content_length
+                        )
 
-        return images
+                        # if everything is ok, yield it out
+                        yield image['link']
+
+                except requests.exceptions.ConnectTimeout:
+                    pass
+                except requests.exceptions.ReadTimeout:
+                    pass
+                except requests.exceptions.SSLError:
+                    pass
 
 
 class GoogleBackendException(Exception):
