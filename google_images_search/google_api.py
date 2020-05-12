@@ -27,7 +27,8 @@ class GoogleCustomSearch(object):
             'imgSize': None,
             'fileType': None,
             'safe': 'off',
-            'imgDominantColor': None
+            'imgDominantColor': None,
+            'rights': None
         }
 
     def _query_google_api(self, search_params, cache_discovery=True):

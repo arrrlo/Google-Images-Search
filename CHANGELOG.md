@@ -1,5 +1,11 @@
 # Changelog
 
+## Latest
+
+### Added in latest
+
+-   Option to specify images usage rights
+
 ## 1.1.1
 
 ### Added in 1.1.1
