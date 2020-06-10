@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2
+
+### Added in 1.1.2
+
+-   Due to the image validation, non-valid images are ignored, so is triggered again and again until desired number of images is reached (change suggested by [@Uskompuf](https://github.com/Uskompuf)
+
 ## 1.1.1
 
 ### Added in 1.1.1
