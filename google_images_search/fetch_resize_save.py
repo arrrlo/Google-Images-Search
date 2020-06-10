@@ -28,6 +28,7 @@ class FetchResizeSave(object):
         self._progress = False
         self._chunk_sizes = {}
         self._terminal_lines = {}
+        self._search_again = False
         self._download_progress = {}
         self._report_progress = progressbar_fn
 
@@ -86,10 +87,11 @@ class FetchResizeSave(object):
         :return: None
         """
 
-        self._set_data(
-            search_params, path_to_dir, width, height, cache_discovery
-        )
-        self._search_result = []
+        if not self._search_again:
+            self._set_data(
+                search_params, path_to_dir, width, height, cache_discovery
+            )
+            self._search_result = []
 
         # number of images required from lib user is important
         # save it only when searching for the first time
@@ -103,18 +105,31 @@ class FetchResizeSave(object):
         for i, page in enumerate(range(start, end, IMAGES_NUM_LIMIT)):
             start = page+1
 
+            print(page, start)
+
             if self._number_of_images > IMAGES_NUM_LIMIT*(i+1):
                 num = IMAGES_NUM_LIMIT
             else:
-                num = self._number_of_images % IMAGES_NUM_LIMIT
+                num = (self._number_of_images % IMAGES_NUM_LIMIT) or \
+                      self._number_of_images
 
             self._search_params['start'] = start
             self._search_params['num'] = num
 
             self._search_images(*self._get_data())
 
+            if len(self._search_result) == self._number_of_images:
+                break
+
+        # run search again if validation removed some images
+        # and desired number of images is not reached
+        if len(self._search_result) < self._number_of_images:
+            self.next_page(search_again=True)
+
+        print(self._get_data())
+
     def _search_images(self, search_params, path_to_dir=False, width=None,
-               height=None, cache_discovery=True):
+               height=None, cache_discovery=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
@@ -159,13 +174,14 @@ class FetchResizeSave(object):
             if self._stdscr:
                 curses.endwin()
 
-    def next_page(self):
+    def next_page(self, search_again=False):
         """Get next batch of images.
         Number of images is defined with num search parameter.
         :return: search results
         """
 
         self._page += 1
+        self._search_again = search_again
         self.search(*self._get_data())
 
     def set_chunk_size(self, url, content_size):
