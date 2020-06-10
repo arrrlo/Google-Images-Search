@@ -81,11 +81,12 @@ class GoogleCustomSearch(object):
                 try:
                     response = requests.head(image['link'], timeout=5)
                     content_length = response.headers.get('Content-Length')
+                    content_type = response.headers.get('Content-Type', '')
 
                     # check if the url is valid
                     if response.status_code == 200 and \
-                            'image' in response.headers['Content-Type'] and \
-                            content_length:
+                            'image' in content_type and content_length:
+
                         # calculate download chunk size based on image size
                         self._fetch_resize_save.set_chunk_size(
                             image['link'], content_length
@@ -100,6 +101,7 @@ class GoogleCustomSearch(object):
                     pass
                 except requests.exceptions.SSLError:
                     pass
+
 
 
 class GoogleBackendException(Exception):
