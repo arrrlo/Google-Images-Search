@@ -17,7 +17,7 @@ def cli(ctx, developer_key, custom_search_cx):
 
 
 IMAGE_TYPES = ('clipart', 'face', 'lineart', 'news', 'photo', )
-IMAGE_SIZES = ('huge', 'icon', 'large', 'medium', 'small', 'xlarge', 'xxlarge')
+IMAGE_SIZES = ('imgSizeUndefined', 'HUGE', 'ICON', 'LARGE', 'MEDIUM', 'SMALL', 'XLARGE', 'XXLARGE')
 FILE_TYPES = ('jpg', 'gif', 'png')
 DOMINANT_COLORS = ('black', 'blue', 'brown', 'gray', 'green', 'pink', 'purple',
                    'teal', 'white', 'yellow')
@@ -35,7 +35,7 @@ SAFE_SEARCH = ('high', 'medium', 'off', )
 @click.option('-i', '--imagetype', type=click.Choice(IMAGE_TYPES),
               default='photo', help='Image type')
 @click.option('-s', '--imagesize', type=click.Choice(IMAGE_SIZES),
-              default='large', help='Image size')
+              default='LARGE', help='Image size')
 @click.option('-c', '--dominantcolor', type=click.Choice(DOMINANT_COLORS),
               default='black', help='Dominant color in images')
 @click.option('-d', '--download_path', type=click.Path(dir_okay=True),
