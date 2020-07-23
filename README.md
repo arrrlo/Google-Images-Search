@@ -125,14 +125,6 @@ gis.search(search_params=_search_params)
 gis.next_page()
 for image in gis.results():
     ...
-
-# or if you want to do it manually just use "start" search parameter:
-_search_params = {
-    ...
-    'num': 10,
-    'start': 21,
-    ...
-}
 ```
 
 ## [Image validation](#image-validation)
