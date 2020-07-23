@@ -27,6 +27,7 @@ class FetchResizeSave(object):
         self._stdscr = None
         self._progress = False
         self._chunk_sizes = {}
+        self.zero_return = False
         self._terminal_lines = {}
         self._search_again = False
         self._download_progress = {}
@@ -119,7 +120,7 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
-            if len(self._search_result) >= self._number_of_images:
+            if len(self._search_result) >= self._number_of_images or self.zero_return:
                 break
         else:
             # run search again if validation removed some images
