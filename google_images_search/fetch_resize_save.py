@@ -119,7 +119,8 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
-            if len(self._search_result) >= self._number_of_images:
+            if len(self._search_result) >= self._number_of_images or \
+                    len(self._search_result) == 0:
                 break
         else:
             # run search again if validation removed some images

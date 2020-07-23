@@ -63,15 +63,18 @@ def search(ctx, query, num, safe, filetype, imagetype,
         ctx.obj['object'].search(search_params, download_path,
                                  width, height, custom_file_name)
 
-        for image in ctx.obj['object'].results():
-            click.echo(image.url)
-            if image.path:
-                click.secho(image.path, fg='blue')
-                if not image.resized:
-                    click.secho('[image is not resized]', fg='red')
-            else:
-                click.secho('[image is not downloaded]', fg='red')
-            click.echo()
+        if ctx.obj['object'].results():
+            for image in ctx.obj['object'].results():
+                click.echo(image.url)
+                if image.path:
+                    click.secho(image.path, fg='blue')
+                    if not image.resized:
+                        click.secho('[image is not resized]', fg='red')
+                else:
+                    click.secho('[image is not downloaded]', fg='red')
+                click.echo()
+        else:
+            click.secho('No images found!', fg='red')
 
     except GoogleBackendException:
         click.secho('Error occurred trying to fetch '

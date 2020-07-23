@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+### Fixed in 1.2.1
+
+-   If Google returns zero results, don't loop to get desired number of images. 
+
 ## 1.2.0
 
 ### Added in 1.2.0
