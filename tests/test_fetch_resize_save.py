@@ -64,7 +64,7 @@ class TestFetchResizeSave(unittest.TestCase):
         self.assertEqual(frs._cache_discovery, True)
 
         self.assertEqual(frs._page, 1)
-        self.assertEqual(frs._number_of_images, 1)
+        self.assertEqual(frs._number_of_images, None)
 
     def test_search_url(self):
         self._frs.search({'num': 2})
