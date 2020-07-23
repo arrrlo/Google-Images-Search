@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3
+
+### Fixed in 1.1.3
+
+-   CLI was broken, so I fixed it.
+
 ## 1.1.2
 
 ### Added in 1.1.2
