@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.4
+
+### Fixed in 1.1.4
+
+-   Sometimes the lib would return more images then user would request.
+
 ## 1.1.3
 
 ### Fixed in 1.1.3

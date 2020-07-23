@@ -35,7 +35,7 @@ class FetchResizeSave(object):
         self._set_data()
 
         self._page = 1
-        self._number_of_images = 1
+        self._number_of_images = None
 
         if progressbar_fn:
             # user nserted progressbar fn
@@ -95,9 +95,8 @@ class FetchResizeSave(object):
 
         # number of images required from lib user is important
         # save it only when searching for the first time
-        # it will change if it's bigger then then limit number (10)
-        if self._search_params.get('start', 1) == 1:
-            self._number_of_images = search_params.get('num', 1)
+        if not self._number_of_images:
+            self._number_of_images = search_params.get('num') or 1
 
         start = self._number_of_images * (self._page - 1)
         end = self._number_of_images * self._page
@@ -116,13 +115,14 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
-            if len(self._search_result) == self._number_of_images:
+            if len(self._search_result) >= self._number_of_images:
                 break
-
-        # run search again if validation removed some images
-        # and desired number of images is not reached
-        if len(self._search_result) < self._number_of_images:
+        else:
+            # run search again if validation removed some images
+            # and desired number of images is not reached
             self.next_page(search_again=True)
+
+        self._search_result = self._search_result[:self._number_of_images]
 
     def _search_images(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=False):
@@ -202,6 +202,7 @@ class FetchResizeSave(object):
             image.download(path_to_dir)
             if width and height:
                 image.resize(width, height)
+
         self._search_result.append(image)
 
     def results(self):

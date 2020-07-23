@@ -77,6 +77,11 @@ class GoogleCustomSearch(object):
         res = self._query_google_api(search_params, cache_discovery)
 
         for image in res.get('items', []):
+
+            if len(self._fetch_resize_save._search_result) >= \
+                    self._fetch_resize_save._number_of_images:
+                break
+
             if self._fetch_resize_save.validate_images:
                 try:
                     response = requests.head(image['link'], timeout=5)
@@ -91,16 +96,14 @@ class GoogleCustomSearch(object):
                         self._fetch_resize_save.set_chunk_size(
                             image['link'], content_length
                         )
-
-                        # if everything is ok, yield it out
-                        yield image['link']
-
                 except requests.exceptions.ConnectTimeout:
                     pass
                 except requests.exceptions.ReadTimeout:
                     pass
                 except requests.exceptions.SSLError:
                     pass
+
+            yield image['link']
 
 
 
