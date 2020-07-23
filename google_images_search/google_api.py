@@ -76,7 +76,11 @@ class GoogleCustomSearch(object):
         search_params = self._search_params(params)
         res = self._query_google_api(search_params, cache_discovery)
 
-        for image in res.get('items', []):
+        results = res.get('items', [])
+        if not results:
+            self._fetch_resize_save.zero_return = True
+
+        for image in results:
 
             if len(self._fetch_resize_save._search_result) >= \
                     self._fetch_resize_save._number_of_images:
