@@ -27,7 +27,7 @@ SAFE_SEARCH = ('high', 'medium', 'off', )
 @cli.command()
 @click.pass_context
 @click.option('-q', '--query', help='Search query')
-@click.option('-n', '--num', default=5, help='Number of images in response')
+@click.option('-n', '--num', default=1, help='Number of images in response')
 @click.option('-s', '--safe', type=click.Choice(SAFE_SEARCH),
               default='off', help='Search safety level')
 @click.option('-f', '--filetype', type=click.Choice(FILE_TYPES),
@@ -51,7 +51,7 @@ def search(ctx, query, num, safe, filetype, imagetype,
         'safe': safe,
         'fileType': filetype,
         'imgType': imagetype,
-        'imgSize': imagesize,
+        'imgSize': imagesize.upper(),
         'imgDominantColor': dominantcolor
     }
 
@@ -67,7 +67,7 @@ def search(ctx, query, num, safe, filetype, imagetype,
                 if not image.resized:
                     click.secho('[image is not resized]', fg='red')
             else:
-                click.secho('[image is not download]', fg='red')
+                click.secho('[image is not downloaded]', fg='red')
             click.echo()
 
     except GoogleBackendException:

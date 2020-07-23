@@ -105,8 +105,6 @@ class FetchResizeSave(object):
         for i, page in enumerate(range(start, end, IMAGES_NUM_LIMIT)):
             start = page+1
 
-            print(page, start)
-
             if self._number_of_images > IMAGES_NUM_LIMIT*(i+1):
                 num = IMAGES_NUM_LIMIT
             else:
@@ -125,8 +123,6 @@ class FetchResizeSave(object):
         # and desired number of images is not reached
         if len(self._search_result) < self._number_of_images:
             self.next_page(search_again=True)
-
-        print(self._get_data())
 
     def _search_images(self, search_params, path_to_dir=False, width=None,
                height=None, cache_discovery=False):
