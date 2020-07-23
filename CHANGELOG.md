@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+### Added in 1.2.0
+
+-   Ability to save save images with custom file name (change suggested by [@otsir](https://github.com/otsir))
+
 ## 1.1.4
 
 ### Fixed in 1.1.4

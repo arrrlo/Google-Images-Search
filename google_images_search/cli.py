@@ -42,8 +42,10 @@ SAFE_SEARCH = ('high', 'medium', 'off', )
               help='Download images')
 @click.option('-w', '--width', help='Image crop width')
 @click.option('-h', '--height', help='Image crop height')
+@click.option('-m', '--custom_file_name', help='Custom file name')
 def search(ctx, query, num, safe, filetype, imagetype,
-           imagesize, dominantcolor, download_path, width, height):
+           imagesize, dominantcolor, download_path, width, height,
+           custom_file_name):
 
     search_params = {
         'q': query,
@@ -58,7 +60,8 @@ def search(ctx, query, num, safe, filetype, imagetype,
     click.clear()
 
     try:
-        ctx.obj['object'].search(search_params, download_path, width, height)
+        ctx.obj['object'].search(search_params, download_path,
+                                 width, height, custom_file_name)
 
         for image in ctx.obj['object'].results():
             click.echo(image.url)

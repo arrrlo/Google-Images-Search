@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='Google Images Search',
-    version="1.1.4",
+    version="1.2.0",
 
     description='Search for image using Google Custom Search API and resize & crop the image afterwords',
     long_description=readme(),

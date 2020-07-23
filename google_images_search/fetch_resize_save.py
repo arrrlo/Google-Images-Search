@@ -30,6 +30,7 @@ class FetchResizeSave(object):
         self._terminal_lines = {}
         self._search_again = False
         self._download_progress = {}
+        self._custom_image_name = None
         self._report_progress = progressbar_fn
 
         self._set_data()
@@ -76,7 +77,7 @@ class FetchResizeSave(object):
                self._cache_discovery
 
     def search(self, search_params, path_to_dir=False, width=None,
-               height=None, cache_discovery=False):
+               height=None, custom_image_name=None, cache_discovery=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
@@ -84,8 +85,11 @@ class FetchResizeSave(object):
         :param width: crop width of the images
         :param height: crop height of the images
         :param cache_discovery: whether or not to cache the discovery doc
+        :param custom_image_name: define custom filename
         :return: None
         """
+
+        self._custom_image_name = custom_image_name
 
         if not self._search_again:
             self._set_data(
@@ -225,7 +229,23 @@ class FetchResizeSave(object):
 
         raw_filename = url.split('/')[-1].split('?')[0]
         basename, ext = os.path.splitext(raw_filename)
-        filename = "".join(x for x in basename if x.isalnum()) + ext
+
+        if self._custom_image_name:
+            def increment_naming(dir_list, name, number=0):
+                if number:
+                    file_name = ''.join([name, '(', str(number), ')', ext])
+                else:
+                    file_name = ''.join([name, ext])
+
+                if file_name in dir_list:
+                    return increment_naming(dir_list, name, number+1)
+                else:
+                    return file_name
+
+            filename = increment_naming(
+                os.listdir(path_to_dir), self._custom_image_name)
+        else:
+            filename = ''.join(x for x in basename if x.isalnum()) + ext
 
         path_to_image = os.path.join(path_to_dir, filename)
 
