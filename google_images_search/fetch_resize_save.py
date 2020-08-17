@@ -251,7 +251,7 @@ class FetchResizeSave(object):
             basename = increment_naming(
                 os.listdir(path_to_dir), self._custom_image_name)
         else:
-            basename = basename + '.' + ext
+            basename = basename + ext
 
         path_to_image = os.path.join(path_to_dir, basename)
 
