@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.2
+
+### Fixed in 1.2.2
+
+-   Upgrade from Pillow 6.0 to 7.1.0
+-   Fixed issue with downloading images with custom name
+
 ## 1.2.1
 
 ### Fixed in 1.2.1
