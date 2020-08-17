@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0
+
+### Added in 1.3.0
+
+-   Removed Python 2.7 support
+
+### Fixed in 1.3.0
+
+-   Upgrade from Pillow 6.0 to 7.1.0
+-   Fixed issue with downloading images with custom name
+
 ## 1.2.1
 
 ### Fixed in 1.2.1

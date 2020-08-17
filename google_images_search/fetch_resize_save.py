@@ -3,7 +3,7 @@ import curses
 import requests
 import threading
 from PIL import Image
-from resizeimage import resizeimage
+from resizeimage import resizeimage, imageexceptions
 
 from .google_api import GoogleCustomSearch
 
@@ -120,6 +120,8 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
+            print(len(self._search_result))
+
             if len(self._search_result) >= self._number_of_images or self.zero_return:
                 break
         else:
@@ -206,7 +208,10 @@ class FetchResizeSave(object):
         if path_to_dir:
             image.download(path_to_dir)
             if width and height:
-                image.resize(width, height)
+                try:
+                    image.resize(width, height)
+                except imageexceptions.ImageSizeError:
+                    pass
 
         self._search_result.append(image)
 
@@ -243,12 +248,12 @@ class FetchResizeSave(object):
                 else:
                     return file_name
 
-            filename = increment_naming(
+            basename = increment_naming(
                 os.listdir(path_to_dir), self._custom_image_name)
         else:
-            filename = ''.join(x for x in basename if x.isalnum()) + ext
+            basename = basename + ext
 
-        path_to_image = os.path.join(path_to_dir, filename)
+        path_to_image = os.path.join(path_to_dir, basename)
 
         with open(path_to_image, 'wb+') as f:
             for chunk in self.get_raw_data(url):
