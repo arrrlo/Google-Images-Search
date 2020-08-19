@@ -55,7 +55,7 @@ def search(ctx, query, num, safe, filetype, imagetype,
         'safe': safe,
         'fileType': filetype,
         'imgType': imagetype,
-        'rights': usagerights
+        'rights': usagerights,
         'imgSize': imagesize.upper(),
         'imgDominantColor': dominantcolor
     }
