@@ -4,7 +4,7 @@
 
 ### Added in 1.3.1
 
--   Option to specify images usage rights
+-   Option to specify images usage rights (change made by [@bradleyfowler123](https://github.com/bradleyfowler123))
 
 ## 1.3.0
 
