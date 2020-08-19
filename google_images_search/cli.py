@@ -28,7 +28,7 @@ USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike', 'cc_noncomme
 @cli.command()
 @click.pass_context
 @click.option('-q', '--query', help='Search query')
-@click.option('-n', '--num', default=5, help='Number of images in response')
+@click.option('-n', '--num', default=1, help='Number of images in response')
 @click.option('-s', '--safe', type=click.Choice(SAFE_SEARCH),
               default='off', help='Search safety level')
 @click.option('-f', '--filetype', type=click.Choice(FILE_TYPES),
@@ -45,35 +45,39 @@ USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike', 'cc_noncomme
               help='Download images')
 @click.option('-w', '--width', help='Image crop width')
 @click.option('-h', '--height', help='Image crop height')
+@click.option('-m', '--custom_file_name', help='Custom file name')
 def search(ctx, query, num, safe, filetype, imagetype,
-           imagesize, dominantcolor, usagerights, download_path, width, height):
+           imagesize, dominantcolor, usagerights, download_path, width, height, custom_file_name):
     usagerights = '|'.join(usagerights)
-
     search_params = {
         'q': query,
         'num': num,
         'safe': safe,
         'fileType': filetype,
         'imgType': imagetype,
-        'imgSize': imagesize,
-        'imgDominantColor': dominantcolor,
         'rights': usagerights
+        'imgSize': imagesize.upper(),
+        'imgDominantColor': dominantcolor
     }
 
     click.clear()
 
     try:
-        ctx.obj['object'].search(search_params, download_path, width, height)
+        ctx.obj['object'].search(search_params, download_path,
+                                 width, height, custom_file_name)
 
-        for image in ctx.obj['object'].results():
-            click.echo(image.url)
-            if image.path:
-                click.secho(image.path, fg='blue')
-                if not image.resized:
-                    click.secho('[image is not resized]', fg='red')
-            else:
-                click.secho('[image is not download]', fg='red')
-            click.echo()
+        if ctx.obj['object'].results():
+            for image in ctx.obj['object'].results():
+                click.echo(image.url)
+                if image.path:
+                    click.secho(image.path, fg='blue')
+                    if not image.resized:
+                        click.secho('[image is not resized]', fg='red')
+                else:
+                    click.secho('[image is not downloaded]', fg='red')
+                click.echo()
+        else:
+            click.secho('No images found!', fg='red')
 
     except GoogleBackendException:
         click.secho('Error occurred trying to fetch '

@@ -1,10 +1,51 @@
 # Changelog
 
-## Latest
+## 1.3.1
 
-### Added in latest
+### Added in 1.3.1
 
 -   Option to specify images usage rights
+
+## 1.3.0
+
+### Added in 1.3.0
+
+-   Removed Python 2.7 support
+
+### Fixed in 1.3.0
+
+-   Upgrade from Pillow 6.0 to 7.1.0
+-   Fixed issue with downloading images with custom name
+
+## 1.2.1
+
+### Fixed in 1.2.1
+
+-   If Google returns zero results, don't loop to get desired number of images. 
+
+## 1.2.0
+
+### Added in 1.2.0
+
+-   Ability to save save images with custom file name (change suggested by [@otsir](https://github.com/otsir))
+
+## 1.1.4
+
+### Fixed in 1.1.4
+
+-   Sometimes the lib would return more images then user would request.
+
+## 1.1.3
+
+### Fixed in 1.1.3
+
+-   CLI was broken, so I fixed it.
+
+## 1.1.2
+
+### Added in 1.1.2
+
+-   Due to the image validation, non-valid images are ignored, so is triggered again and again until desired number of images is reached (change suggested by [@Uskompuf](https://github.com/Uskompuf)
 
 ## 1.1.1
 

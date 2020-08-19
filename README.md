@@ -104,6 +104,21 @@ for image in gis.results():
     image.resize(500, 500)
 ```
 
+## [Custom file name](#custom-file-name)
+
+Sometimes you would want to save images with file name of your choice.
+
+```python
+from google_images_search import GoogleImagesSearch
+
+gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx')
+
+_search_params = { ... }
+
+gis.search(search_params=_search_params, path_to_dir='...', 
+           custom_image_name='my_image')
+```
+
 ## [Paging](#paging)
 
 Google's API limit is 10 images per request.  
@@ -126,14 +141,6 @@ gis.search(search_params=_search_params)
 gis.next_page()
 for image in gis.results():
     ...
-
-# or if you want to do it manually just use "start" search parameter:
-_search_params = {
-    ...
-    'num': 10,
-    'start': 21,
-    ...
-}
 ```
 
 ## [Image validation](#image-validation)

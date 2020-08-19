@@ -64,7 +64,7 @@ class TestFetchResizeSave(unittest.TestCase):
         self.assertEqual(frs._cache_discovery, True)
 
         self.assertEqual(frs._page, 1)
-        self.assertEqual(frs._number_of_images, 1)
+        self.assertEqual(frs._number_of_images, None)
 
     def test_search_url(self):
         self._frs.search({'num': 2})
@@ -103,15 +103,15 @@ class TestFetchResizeSave(unittest.TestCase):
             my_bytes_io.seek(0)
 
     def test_paging(self):
-        self._frs.search({'num': 5})
-        self.assertEqual(self._frs._search_params, {'num': 5, 'start': 1})
+        self._frs.search({'num': 2})
+        self.assertEqual(self._frs._search_params, {'num': 2, 'start': 1})
         self.assertEqual(self._frs._page, 1)
-        self.assertEqual(self._frs._number_of_images, 5)
+        self.assertEqual(self._frs._number_of_images, 2)
 
         self._frs.next_page()
-        self.assertEqual(self._frs._search_params, {'num': 5, 'start': 6})
+        self.assertEqual(self._frs._search_params, {'num': 2, 'start': 3})
         self.assertEqual(self._frs._page, 2)
-        self.assertEqual(self._frs._number_of_images, 5)
+        self.assertEqual(self._frs._number_of_images, 2)
 
 
 if __name__ == '__main__':
