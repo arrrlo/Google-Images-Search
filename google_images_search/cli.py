@@ -22,6 +22,7 @@ FILE_TYPES = ('jpg', 'gif', 'png')
 DOMINANT_COLORS = ('black', 'blue', 'brown', 'gray', 'green', 'pink', 'purple',
                    'teal', 'white', 'yellow')
 SAFE_SEARCH = ('high', 'medium', 'off', )
+USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike', 'cc_noncommercial', 'cc_nonderived')
 
 
 @cli.command()
@@ -38,21 +39,23 @@ SAFE_SEARCH = ('high', 'medium', 'off', )
               default='large', help='Image size')
 @click.option('-c', '--dominantcolor', type=click.Choice(DOMINANT_COLORS),
               default='black', help='Dominant color in images')
+@click.option('-r', '--usagerights', type=click.Choice(USAGE_RIGHTS), multiple=True,
+              default=('cc_publicdomain',), help='Usage rights of images')
 @click.option('-d', '--download_path', type=click.Path(dir_okay=True),
               help='Download images')
 @click.option('-w', '--width', help='Image crop width')
 @click.option('-h', '--height', help='Image crop height')
 @click.option('-m', '--custom_file_name', help='Custom file name')
 def search(ctx, query, num, safe, filetype, imagetype,
-           imagesize, dominantcolor, download_path, width, height,
-           custom_file_name):
-
+           imagesize, dominantcolor, usagerights, download_path, width, height, custom_file_name):
+    usagerights = '|'.join(usagerights)
     search_params = {
         'q': query,
         'num': num,
         'safe': safe,
         'fileType': filetype,
         'imgType': imagetype,
+        'rights': usagerights
         'imgSize': imagesize.upper(),
         'imgDominantColor': dominantcolor
     }
