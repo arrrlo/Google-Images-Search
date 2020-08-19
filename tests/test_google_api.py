@@ -23,7 +23,8 @@ class TestGoogleApi(unittest.TestCase):
             'imgSize': None,
             'fileType': None,
             'safe': 'off',
-            'imgDominantColor': None
+            'imgDominantColor': None,
+            'rights': None
         })
 
     def test_search_params(self):

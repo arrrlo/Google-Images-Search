@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+### Added in 1.3.1
+
+-   Option to specify images usage rights (change made by [@bradleyfowler123](https://github.com/bradleyfowler123))
+
 ## 1.3.0
 
 ### Added in 1.3.0
