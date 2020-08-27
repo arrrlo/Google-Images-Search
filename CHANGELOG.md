@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2
+
+### Fixed in 1.3.2
+
+-   Some images failed to download (issue discovered by [@techguytechtips](https://github.com/techguytechtips))
+
 ## 1.3.1
 
 ### Added in 1.3.1
