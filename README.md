@@ -1,3 +1,5 @@
+![Google Images Search](google.jpeg)
+
 # Google Images Search
 
 [![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
@@ -85,7 +87,7 @@ _search_params = {
     'imgType': 'clipart|face|lineart|news|photo',
     'imgSize': 'huge|icon|large|medium|small|xlarge|xxlarge',
     'imgDominantColor': 'black|blue|brown|gray|green|pink|purple|teal|white|yellow',
-    'usageRights': 'cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived'
+    'rights': 'cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived'
 }
 
 # this will only search for images:
