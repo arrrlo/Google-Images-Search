@@ -120,8 +120,6 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
-            print(len(self._search_result))
-
             if len(self._search_result) >= self._number_of_images or self.zero_return:
                 break
         else:
@@ -234,7 +232,8 @@ class FetchResizeSave(object):
             os.makedirs(path_to_dir)
 
         raw_filename = url.split('/')[-1].split('?')[0]
-        basename, ext = os.path.splitext(raw_filename)
+        basename, _ = os.path.splitext(raw_filename)
+        ext = '.jpg'
 
         if self._custom_image_name:
             def increment_naming(dir_list, name, number=0):
@@ -255,9 +254,11 @@ class FetchResizeSave(object):
 
         path_to_image = os.path.join(path_to_dir, basename)
 
-        with open(path_to_image, 'wb+') as f:
+        with open(path_to_image, 'wb') as f:
             for chunk in self.get_raw_data(url):
                 f.write(chunk)
+
+        Image.open(path_to_image).convert('RGB').save(path_to_image, 'jpeg')
 
         return path_to_image
 
@@ -267,7 +268,7 @@ class FetchResizeSave(object):
         :return: raw image data
         """
 
-        with requests.get(url, stream=True) as req:
+        with requests.get(url, stream=True, verify=False) as req:
             for chunk in req.iter_content(chunk_size=self._chunk_sizes.get(url)):
 
                 # filter out keep-alive new chunks

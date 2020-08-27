@@ -89,7 +89,8 @@ class GoogleCustomSearch(object):
 
             if self._fetch_resize_save.validate_images:
                 try:
-                    response = requests.head(image['link'], timeout=5)
+                    response = requests.head(
+                        image['link'], timeout=5, allow_redirects=False)
                     content_length = response.headers.get('Content-Length')
                     content_type = response.headers.get('Content-Type', '')
 
@@ -102,11 +103,11 @@ class GoogleCustomSearch(object):
                             image['link'], content_length
                         )
                 except requests.exceptions.ConnectTimeout:
-                    pass
+                    continue
                 except requests.exceptions.ReadTimeout:
-                    pass
+                    continue
                 except requests.exceptions.SSLError:
-                    pass
+                    continue
 
             yield image['link']
 
