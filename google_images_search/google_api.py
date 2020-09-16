@@ -112,6 +112,5 @@ class GoogleCustomSearch(object):
             yield image['link']
 
 
-
 class GoogleBackendException(Exception):
     """Exception handler for search api"""

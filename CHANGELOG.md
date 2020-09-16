@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.3
+
+### Fixed in 1.3.3
+
+-   SSL check is back
+
 ## 1.3.2
 
 ### Fixed in 1.3.2
