@@ -109,7 +109,7 @@ class FetchResizeSave(object):
         for i, page in enumerate(range(start, end, IMAGES_NUM_LIMIT)):
             start = page+1
 
-            if self._number_of_images > IMAGES_NUM_LIMIT*(i+1):
+            if self._number_of_images >= IMAGES_NUM_LIMIT*(i+1):
                 num = IMAGES_NUM_LIMIT
             else:
                 num = (self._number_of_images % IMAGES_NUM_LIMIT) or \
