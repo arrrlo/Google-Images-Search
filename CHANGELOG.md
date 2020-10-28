@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.4
+
+### Fixed in 1.3.4
+
+-   Number of images limit would produce error if number was 20 or 30 or etc (issue discovered by [@gaarsmu](https://github.com/gaarsmu))
+
 ## 1.3.3
 
 ### Fixed in 1.3.3
