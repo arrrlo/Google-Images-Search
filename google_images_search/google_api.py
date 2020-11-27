@@ -108,7 +108,8 @@ class GoogleCustomSearch(object):
                     continue
                 except requests.exceptions.SSLError:
                     continue
-
+                except requests.exceptions.InvalidSchema:
+                    continue
             yield image['link']
 
 
