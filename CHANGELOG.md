@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.5
+
+### Fixed in 1.3.5
+
+-   Pilow version updated (pull request by [@eladavron](https://github.com/eladavron))
+-   Fixed x-raw-image://urls (pull request by [@reteps](https://github.com/reteps))
+
 ## 1.3.4
 
 ### Fixed in 1.3.4
