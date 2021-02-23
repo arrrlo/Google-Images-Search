@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.6
+
+### Fixed in 1.3.6
+
+-   CLI used non-null default params (discovered by [@itoche](https://github.com/itoche))
+
 ## 1.3.5
 
 ### Fixed in 1.3.5

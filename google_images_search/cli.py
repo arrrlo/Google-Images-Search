@@ -22,7 +22,8 @@ FILE_TYPES = ('jpg', 'gif', 'png')
 DOMINANT_COLORS = ('black', 'blue', 'brown', 'gray', 'green', 'pink', 'purple',
                    'teal', 'white', 'yellow')
 SAFE_SEARCH = ('high', 'medium', 'off', )
-USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike', 'cc_noncommercial', 'cc_nonderived')
+USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike',
+                'cc_noncommercial', 'cc_nonderived')
 
 
 @cli.command()
@@ -32,23 +33,27 @@ USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike', 'cc_noncomme
 @click.option('-s', '--safe', type=click.Choice(SAFE_SEARCH),
               default='off', help='Search safety level')
 @click.option('-f', '--filetype', type=click.Choice(FILE_TYPES),
-              default='jpg', help='Images file type')
+              help='Images file type')
 @click.option('-i', '--imagetype', type=click.Choice(IMAGE_TYPES),
-              default='photo', help='Image type')
+              help='Image type')
 @click.option('-s', '--imagesize', type=click.Choice(IMAGE_SIZES),
-              default='large', help='Image size')
+              help='Image size')
 @click.option('-c', '--dominantcolor', type=click.Choice(DOMINANT_COLORS),
-              default='black', help='Dominant color in images')
-@click.option('-r', '--usagerights', type=click.Choice(USAGE_RIGHTS), multiple=True,
-              default=('cc_publicdomain',), help='Usage rights of images')
+              help='Dominant color in images')
+@click.option('-r', '--usagerights', type=click.Choice(USAGE_RIGHTS),
+              multiple=True, help='Usage rights of images')
 @click.option('-d', '--download_path', type=click.Path(dir_okay=True),
               help='Download images')
 @click.option('-w', '--width', help='Image crop width')
 @click.option('-h', '--height', help='Image crop height')
 @click.option('-m', '--custom_file_name', help='Custom file name')
-def search(ctx, query, num, safe, filetype, imagetype,
-           imagesize, dominantcolor, usagerights, download_path, width, height, custom_file_name):
+def search(ctx, query, num, safe, filetype, imagetype, imagesize,
+           dominantcolor, usagerights, download_path, width, height,
+           custom_file_name):
+
     usagerights = '|'.join(usagerights)
+    if imagesize:
+        imagesize = imagesize.upper()
     search_params = {
         'q': query,
         'num': num,
@@ -56,7 +61,7 @@ def search(ctx, query, num, safe, filetype, imagetype,
         'fileType': filetype,
         'imgType': imagetype,
         'rights': usagerights,
-        'imgSize': imagesize.upper(),
+        'imgSize': imagesize,
         'imgDominantColor': dominantcolor
     }
 
