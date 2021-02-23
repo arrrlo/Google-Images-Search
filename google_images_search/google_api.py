@@ -1,6 +1,6 @@
 import os
 import requests
-from apiclient.discovery import build
+from apiclient import discovery
 
 
 class GoogleCustomSearch(object):
@@ -39,9 +39,10 @@ class GoogleCustomSearch(object):
         """
 
         if not self._google_build:
-            self._google_build = build("customsearch", "v1",
-                                       developerKey=self._developer_key,
-                                       cache_discovery=cache_discovery)
+            self._google_build = discovery.build(
+                "customsearch", "v1",
+                developerKey=self._developer_key,
+                cache_discovery=cache_discovery)
 
         return self._google_build.cse().list(
             cx=self._custom_search_cx, **search_params).execute()
