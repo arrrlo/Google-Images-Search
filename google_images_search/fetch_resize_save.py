@@ -40,7 +40,7 @@ class FetchResizeSave(object):
         self._number_of_images = None
 
         if progressbar_fn:
-            # user nserted progressbar fn
+            # user inserted progressbar fn
             self._progress = True
         else:
             if progress:
@@ -120,7 +120,8 @@ class FetchResizeSave(object):
 
             self._search_images(*self._get_data())
 
-            if len(self._search_result) >= self._number_of_images or self.zero_return:
+            if len(self._search_result) >= self._number_of_images \
+                    or self.zero_return:
                 break
         else:
             # run search again if validation removed some images
@@ -277,7 +278,8 @@ class FetchResizeSave(object):
                     if self._progress:
                         self._download_progress[url] += 1
                         if self._download_progress[url] <= 100:
-                            self._report_progress(url, self._download_progress[url])
+                            self._report_progress(
+                                url, self._download_progress[url])
 
                     yield chunk
 
