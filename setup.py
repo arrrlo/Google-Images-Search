@@ -1,5 +1,7 @@
 from setuptools import setup
 
+from google_images_search.fetch_resize_save import __version__
+
 
 def readme():
     with open('README.md') as f:
@@ -8,7 +10,7 @@ def readme():
 
 setup(
     name='Google Images Search',
-    version="1.3.6",
+    version=__version__,
 
     description='Search for image using Google Custom Search '
                 'API and resize & crop the image afterwords',
