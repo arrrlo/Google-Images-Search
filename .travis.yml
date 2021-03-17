@@ -1,4 +1,4 @@
-dist: xenial
+dist: python:3.7
 
 language: python
 
@@ -9,8 +9,8 @@ python:
   - 3.9
 
 script:
-  - python3 pip install .
-  - python3 pytest -vvv
+  - pip install .
+  - pytest -vvv
 
 deploy:
   skip_cleanup: true
