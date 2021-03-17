@@ -1,7 +1,8 @@
 import click
+import googleapiclient
 
-from .fetch_resize_save import FetchResizeSave
 from .google_api import GoogleBackendException
+from .fetch_resize_save import FetchResizeSave, __version__
 
 
 @click.group()
@@ -9,9 +10,13 @@ from .google_api import GoogleBackendException
 @click.option('-k', '--developer_key', help='Developer API key')
 @click.option('-c', '--custom_search_cx', help='Custom Search CX')
 def cli(ctx, developer_key, custom_search_cx):
+    click.echo()
+    click.secho(f'GOOGLE IMAGES SEARCH {__version__}', fg='yellow')
+    click.echo()
+
     ctx.obj = {
         'object': FetchResizeSave(
-            developer_key, custom_search_cx, progress=True
+            developer_key, custom_search_cx
         )
     }
 
@@ -65,14 +70,17 @@ def search(ctx, query, num, safe, filetype, imagetype, imagesize,
         'imgDominantColor': dominantcolor
     }
 
-    click.clear()
-
     try:
-        ctx.obj['object'].search(search_params, download_path,
-                                 width, height, custom_file_name)
+        gis = ctx.obj['object']
 
-        if ctx.obj['object'].results():
-            for image in ctx.obj['object'].results():
+        with gis:
+            gis.search(search_params, download_path,
+                       width, height, custom_file_name)
+
+        results = ctx.obj['object'].results()
+
+        if results:
+            for image in results:
                 click.echo(image.url)
                 if image.path:
                     click.secho(image.path, fg='blue')
@@ -87,4 +95,7 @@ def search(ctx, query, num, safe, filetype, imagetype, imagesize,
     except GoogleBackendException:
         click.secho('Error occurred trying to fetch '
                     'images from Google. Please try again.', fg='red')
+
+    except googleapiclient.errors.HttpError as e:
+        click.secho(f'Google reported an error: {str(e)}', fg='red')
         return

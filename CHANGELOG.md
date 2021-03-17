@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.7
+
+### Fixed in 1.3.7
+
+-   Handling CLI exception when api key and cx are not provided
+-   Handling PIL open and rgb convert exception
+
+## Added in 1.3.7
+
+-   Curses terminal progress is now started and ended using context (with statement)
+-   CLI also uses contextual progress
+-   Better progress output in CLI overall
+
 ## 1.3.6
 
 ### Fixed in 1.3.6

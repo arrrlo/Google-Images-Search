@@ -162,16 +162,28 @@ gis = GoogleImagesSearch('your_dev_api_key', 'your_project_cx', validate_images=
 
 ## [Inserting custom progressbar function](#progressbar)
 
+By default, progressbar is not enabled.  
+Only in CLI progressbar is enabled by default using [Curses library](https://docs.python.org/3/howto/curses.html).  
+In a programmatic mode it can be enabled in two ways:  
+- using contextual mode (Curses)  
+- using your custom progressbar function  
+
 ```python
 from google_images_search import GoogleImagesSearch
 
+# using your custom progressbar function
 def my_progressbar(url, progress):
     print(url + ' ' + progress + '%')
-
 gis = GoogleImagesSearch(
     'your_dev_api_key', 'your_project_cx', progressbar_fn=my_progressbar
 )
+_search_params = {...}
+gis.search(search_params=_search_params)
 
+# using contextual mode (Curses)
+with GoogleImagesSearch('your_dev_api_key', 'your_project_cx') as gis:
+    _search_params = {...}
+    gis.search(search_params=_search_params)
 ...
 ```
 

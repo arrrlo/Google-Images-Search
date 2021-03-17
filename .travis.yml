@@ -9,7 +9,9 @@ python:
   - 3.9
 
 script:
-  - pip install .
+  - pip3 install .
+  - pip3 install pytest
+  - pip list
   - pytest -vvv
 
 deploy:
