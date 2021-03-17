@@ -1,6 +1,5 @@
+import os
 from setuptools import setup
-
-from google_images_search.fetch_resize_save import __version__
 
 
 def readme():
@@ -8,9 +7,15 @@ def readme():
         return f.read()
 
 
+def version():
+    with open(os.path.join('.', 'google_images_search', 'meta.py')) as f:
+        contents = f.read()
+    return contents.split('__version__ = ')[1].strip()[1:-1]
+
+
 setup(
     name='Google Images Search',
-    version=__version__,
+    version=version(),
 
     description='Search for image using Google Custom Search '
                 'API and resize & crop the image afterwords',

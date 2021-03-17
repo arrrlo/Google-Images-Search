@@ -5,10 +5,10 @@ import threading
 from PIL import Image, UnidentifiedImageError
 from resizeimage import resizeimage, imageexceptions
 
+from .meta import __version__
 from .google_api import GoogleCustomSearch
 
 
-__version__ = "1.3.7"
 IMAGES_NUM_LIMIT = 10
 
 
