@@ -2,8 +2,9 @@
 /Google_Images_Search.egg-info/
 /build/
 /dist/
-/google_images_search/
 /tests/__pycache__/
 /.DS_Store
 .venv
 /tests/test_my.py
+/google_images_search/__pycache__/
+/dwnld/

@@ -50,7 +50,7 @@ class TestFetchResizeSave(unittest.TestCase):
         self.assertEqual(self._frs._progress, False)
 
         frs = FetchResizeSave(self._api_key, self._api_cx,
-                              progressbar_fn=lambda x, y: None, progress=True)
+                              progressbar_fn=lambda x, y: None)
 
         self.assertEqual(frs._chunk_sizes, {})
         self.assertEqual(frs._terminal_lines, {})

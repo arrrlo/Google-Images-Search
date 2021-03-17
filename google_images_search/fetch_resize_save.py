@@ -2,9 +2,10 @@ import os
 import curses
 import requests
 import threading
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from resizeimage import resizeimage, imageexceptions
 
+from .meta import __version__
 from .google_api import GoogleCustomSearch
 
 
@@ -15,7 +16,7 @@ class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
     def __init__(self, developer_key, custom_search_cx,
-                 progressbar_fn=None, progress=False, validate_images=True):
+                 progressbar_fn=None, validate_images=True):
 
         # initialise google api
         self._google_custom_search = GoogleCustomSearch(
@@ -42,12 +43,41 @@ class FetchResizeSave(object):
         if progressbar_fn:
             # user inserted progressbar fn
             self._progress = True
-        else:
-            if progress:
-                # initialise internal progressbar
-                self._progress = True
-                self._stdscr = curses.initscr()
-                self._report_progress = self.__report_progress
+
+    def __enter__(self):
+        """Emtering a terminal window setup
+        :return: self
+        """
+
+        self._report_progress = self.__report_progress
+        self._progress = True
+
+        # set terminal screen
+        self._stdscr = curses.initscr()
+        self._stdscr.keypad(True)
+        curses.cbreak()
+        curses.noecho()
+
+        # show terminal header information
+        self._stdscr.addstr(0, 0, f'GOOGLE IMAGES SEARCH {__version__}')
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Exiting terminal window and putting all back as it was
+        :param exc_type:
+        :param exc_val:
+        :param exc_tb:
+        :return:
+        """
+
+        self._progress = False
+
+        # reverse all as it was
+        self._stdscr.keypad(False)
+        curses.nocbreak()
+        curses.echo()
+        curses.endwin()
 
     def _set_data(self, search_params=None, path_to_dir=False,
                   width=None, height=None, cache_discovery=True):
@@ -259,7 +289,10 @@ class FetchResizeSave(object):
             for chunk in self.get_raw_data(url):
                 f.write(chunk)
 
-        Image.open(path_to_image).convert('RGB').save(path_to_image, 'jpeg')
+        try:
+            Image.open(path_to_image).convert('RGB').save(path_to_image, 'jpeg')
+        except UnidentifiedImageError:
+            pass
 
         return path_to_image
 
@@ -294,7 +327,14 @@ class FetchResizeSave(object):
 
         fd_img = open(path_to_image, 'rb')
         img = Image.open(fd_img)
-        img = resizeimage.resize_cover(img, [int(width), int(height)])
+
+        try:
+            img = resizeimage.resize_cover(img, [int(width), int(height)])
+        except resizeimage.ImageSizeError:
+            # error resizing an image
+            # image is probably too small
+            pass
+
         img.save(path_to_image, img.format)
         fd_img.close()
 
@@ -306,10 +346,10 @@ class FetchResizeSave(object):
         """
 
         self._stdscr.addstr(
-            self._terminal_lines[url], 0, "Downloading file: {0}".format(url)
+            self._terminal_lines[url] + 2, 0, "Downloading file: {0}".format(url)
         )
         self._stdscr.addstr(
-            self._terminal_lines[url] + 1, 0,
+            self._terminal_lines[url] + 3, 0,
             "Progress: [{1:100}] {0}%".format(progress, "#" * progress)
         )
         self._stdscr.refresh()
