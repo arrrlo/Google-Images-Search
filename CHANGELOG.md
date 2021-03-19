@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.8
+
+### Fixed in 1.3.8
+
+-   Security vulnerability found in Pillow. Update to version to 8.1.1.
+
 ## 1.3.7
 
 ### Fixed in 1.3.7
