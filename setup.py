@@ -48,7 +48,7 @@ setup(
         'click~=7.0',
         'six~=1.12',
         'requests~=2.21',
-        'Pillow~=8.0.1',
+        'Pillow>=8.1.1',
         'python-resize-image~=1.1',
         'google-api-python-client~=1.7',
     ],
