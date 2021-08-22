@@ -28,6 +28,7 @@ class GoogleCustomSearch(object):
             'fileType': None,
             'safe': 'off',
             'imgDominantColor': None,
+            'imgColorType': None,
             'rights': None
         }
 
