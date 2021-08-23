@@ -45,7 +45,7 @@ class FetchResizeSave(object):
             self._progress = True
 
     def __enter__(self):
-        """Emtering a terminal window setup
+        """Entering a terminal window setup
         :return: self
         """
 
