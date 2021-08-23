@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.9
+
+### Fixed in 1.3.9
+
+-   Added "imgColorType" param for Google API search (pull request by [@SantaHey](https://github.com/SantaHey))
+
 ## 1.3.8
 
 ### Fixed in 1.3.8
