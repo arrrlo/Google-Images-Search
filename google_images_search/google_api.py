@@ -104,13 +104,7 @@ class GoogleCustomSearch(object):
                         self._fetch_resize_save.set_chunk_size(
                             image['link'], content_length
                         )
-                except requests.exceptions.ConnectTimeout:
-                    continue
-                except requests.exceptions.ReadTimeout:
-                    continue
-                except requests.exceptions.SSLError:
-                    continue
-                except requests.exceptions.InvalidSchema:
+                except requests.exceptions.RequestException:
                     continue
             yield image['link']
 
