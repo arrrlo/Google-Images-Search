@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.10
+
+### Fixed in 1.3.10
+
+-   Improved error handling when trying to fetch images
+
 ## 1.3.9
 
 ### Fixed in 1.3.9
