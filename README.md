@@ -103,8 +103,13 @@ gis.search(search_params=_search_params, path_to_dir='/path/', width=500, height
 # search first, then download and resize afterwards:
 gis.search(search_params=_search_params)
 for image in gis.results():
-    image.download('/path/')
-    image.resize(500, 500)
+    image.url  # image direct url
+    image.referrer_url  # image referrer url (source) 
+    
+    image.download('/path/')  # download image
+    image.resize(500, 500)  # resize downloaded image
+
+    image.path  # downloaded local file path
 ```
 
 ## [Custom file name](#custom-file-name)

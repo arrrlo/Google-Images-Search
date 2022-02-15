@@ -84,9 +84,8 @@ class GoogleCustomSearch(object):
             self._fetch_resize_save.zero_return = True
 
         for image in results:
-
             if len(self._fetch_resize_save._search_result) >= \
-                    self._fetch_resize_save._number_of_images:
+                   self._fetch_resize_save._number_of_images:
                 break
 
             if self._fetch_resize_save.validate_images:
@@ -106,7 +105,8 @@ class GoogleCustomSearch(object):
                         )
                 except requests.exceptions.RequestException:
                     continue
-            yield image['link']
+
+            yield image['link'], image['image']['thumbnailLink']
 
 
 class GoogleBackendException(Exception):
