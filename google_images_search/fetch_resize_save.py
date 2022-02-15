@@ -161,7 +161,7 @@ class FetchResizeSave(object):
         self._search_result = self._search_result[:self._number_of_images]
 
     def _search_images(self, search_params, path_to_dir=False, width=None,
-               height=None, cache_discovery=False):
+                       height=None, cache_discovery=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
@@ -174,12 +174,13 @@ class FetchResizeSave(object):
 
         i = 0
         threads = []
-        for url in self._google_custom_search.search(
+        for url, referrer_url in self._google_custom_search.search(
             search_params, cache_discovery
         ):
             # initialise image object
             image = GSImage(self)
             image.url = url
+            image.referrer_url = referrer_url
 
             # set thread safe variables
             self._download_progress[url] = 0
@@ -363,6 +364,7 @@ class GSImage(object):
 
         self._url = None
         self._path = None
+        self._referrer_url = None
 
         self.resized = False
 
@@ -399,6 +401,23 @@ class GSImage(object):
         """
 
         self._path = image_path
+
+    @property
+    def referrer_url(self):
+        """Returns image referrer url
+        :return: referrer_url
+        """
+
+        return self._referrer_url
+
+    @referrer_url.setter
+    def referrer_url(self, referrer_url):
+        """Sets image referrer url
+        :param referrer_url: referrer url
+        :return: None
+        """
+
+        self._referrer_url = referrer_url
 
     def download(self, path_to_dir):
         """Downloads image from url to path

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+### Added in 1.4.0
+
+-   Image object now has a referrer url (source) as well
+
 ## 1.3.10
 
 ### Fixed in 1.3.10
