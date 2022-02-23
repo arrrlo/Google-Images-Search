@@ -155,7 +155,7 @@ class FetchResizeSave(object):
                 break
         else:
             # run search again if validation removed some images
-            # and desired number of images is not reached
+            # and desired number of images hasn't been reached
             self.next_page(search_again=True)
 
         self._search_result = self._search_result[:self._number_of_images]
@@ -264,8 +264,10 @@ class FetchResizeSave(object):
             os.makedirs(path_to_dir)
 
         raw_filename = url.split('/')[-1].split('?')[0]
-        basename, _ = os.path.splitext(raw_filename)
-        ext = '.jpg'
+        basename, ext = os.path.splitext(raw_filename)
+
+        if not ext:
+            ext = '.jpg'
 
         if self._custom_image_name:
             def increment_naming(dir_list, name, number=0):
@@ -291,7 +293,8 @@ class FetchResizeSave(object):
                 f.write(chunk)
 
         try:
-            Image.open(path_to_image).convert('RGB').save(path_to_image, 'jpeg')
+            Image.open(path_to_image).convert('RGBA')\
+                .save(path_to_image, 'png')
         except UnidentifiedImageError:
             pass
 

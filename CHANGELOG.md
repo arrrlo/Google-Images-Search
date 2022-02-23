@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.1
+
+### Fixed in 1.4.1
+
+-   Search parameters aligned with Google's definitions (pull request by [@SiewLinYap](https://github.com/SiewLinYap))
+
+### Added in 1.4.1
+
+-   Support for transparent images
+
 ## 1.4.0
 
 ### Added in 1.4.0
