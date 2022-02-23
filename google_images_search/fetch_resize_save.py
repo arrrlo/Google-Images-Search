@@ -155,7 +155,7 @@ class FetchResizeSave(object):
                 break
         else:
             # run search again if validation removed some images
-            # and desired number of images is not reached
+            # and desired number of images hasn't been reached
             self.next_page(search_again=True)
 
         self._search_result = self._search_result[:self._number_of_images]

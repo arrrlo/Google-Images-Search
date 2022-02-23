@@ -89,8 +89,8 @@ class TestFetchResizeSave(unittest.TestCase):
 
     def test_search_path(self):
         self._frs.search({}, path_to_dir=self._base_dir, width=100, height=100)
-        for i, item in enumerate(self._frs.results()):
-            self.assertEqual(item.path, self._file_paths[i])
+        for item in self._frs.results():
+            self.assertTrue(item.path in self._file_paths)
 
     def test_progressbar(self):
         progress_data = []
