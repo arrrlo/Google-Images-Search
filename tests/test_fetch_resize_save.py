@@ -40,8 +40,8 @@ class TestFetchResizeSave(unittest.TestCase):
             ), 'tests'
         )
         self._file_paths = [
-            os.path.join(self._base_dir, '1.jpg'),
-            os.path.join(self._base_dir, '2.jpg'),
+            os.path.join(self._base_dir, '1.png'),
+            os.path.join(self._base_dir, '2.png'),
         ]
 
     def tearDown(self):
