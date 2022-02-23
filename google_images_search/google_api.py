@@ -59,7 +59,10 @@ class GoogleCustomSearch(object):
 
         for key, value in self._search_params_keys.items():
             params_value = params.get(key)
+
             if params_value:
+                if key == "imgSize" and params_value != "imgSizeUndefined":
+                    params_value = params_value.upper()
                 # take user defined param value if defined
                 search_params[key] = params_value
             elif value:

@@ -74,7 +74,7 @@ class TestGoogleApi(unittest.TestCase):
             'safe': 'high',
             'fileType': 'jpg',
             'imgType': 'clipart',
-            'imgSize': 'huge',
+            'imgSize': 'HUGE',
             'searchType': 'image',
             'imgDominantColor': 'black'
         }
