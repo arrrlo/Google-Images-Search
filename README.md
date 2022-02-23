@@ -3,7 +3,7 @@
 # Google Images Search
 
 [![PyPI version](https://badge.fury.io/py/Google-Images-Search.svg)](https://badge.fury.io/py/Google-Images-Search)
-[![Build Status](https://travis-ci.com/arrrlo/Google-Images-Search.svg?branch=master)](https://travis-ci.com/arrrlo/Google-Images-Search)
+[![Build Status](https://app.travis-ci.com/arrrlo/Google-Images-Search.svg?branch=develop)](https://app.travis-ci.com/arrrlo/Google-Images-Search)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b3d5259c67ca48a7bfe844b9721b6c19)](https://www.codacy.com/app/arrrlo/Google-Images-Search?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arrrlo/Google-Images-Search&amp;utm_campaign=Badge_Grade)
 
 ![GitHub issues](https://img.shields.io/github/issues/arrrlo/Google-Images-Search.svg)
