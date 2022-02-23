@@ -21,12 +21,14 @@ def cli(ctx, developer_key, custom_search_cx):
     }
 
 
-IMAGE_TYPES = ('clipart', 'face', 'lineart', 'news', 'photo', )
-IMAGE_SIZES = ('huge', 'icon', 'large', 'medium', 'small', 'xlarge', 'xxlarge')
+IMAGE_TYPES = ('clipart', 'face', 'lineart', 'stock', 'photo',
+               'animated', 'imgTypeUndefined')
+IMAGE_SIZES = ('huge', 'icon', 'large', 'medium', 'small',
+               'xlarge', 'xxlarge', 'imgSizeUndefined')
 FILE_TYPES = ('jpg', 'gif', 'png')
 DOMINANT_COLORS = ('black', 'blue', 'brown', 'gray', 'green', 'pink', 'purple',
                    'teal', 'white', 'yellow')
-SAFE_SEARCH = ('high', 'medium', 'off', )
+SAFE_SEARCH = ('active', 'high', 'medium', 'off', 'safeUndefined')
 USAGE_RIGHTS = ('cc_publicdomain', 'cc_attribute', 'cc_sharealike',
                 'cc_noncommercial', 'cc_nonderived')
 
