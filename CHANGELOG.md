@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.4.2
+
+### Fixed in 1.4.2
+
+-   Bad referrer link fix
+-   Image validation fix (discovered by [@SiewLinYap](https://github.com/SiewLinYap))
+
+### Added in 1.4.2
+
+-   Requests browser simulation
+
 ## 1.4.1
 
 ### Fixed in 1.4.1
