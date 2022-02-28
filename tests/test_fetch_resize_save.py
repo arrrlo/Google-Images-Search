@@ -101,11 +101,12 @@ class TestFetchResizeSave(unittest.TestCase):
         frs = FetchResizeSave(self._api_key, self._api_cx, progressbar_fn=pbar)
         frs.search({'num': 2}, path_to_dir=self._base_dir)
 
-        self.assertEqual(
-           progress_data,
-           list(zip([items['items'][0]['link']] * 100, list(range(1, 101)))) +
-           list(zip([items['items'][1]['link']] * 100, list(range(1, 101))))
-        )
+        test_progress_data = \
+            list(zip([items['items'][0]['link']] * 100, list(range(1, 101)))) +\
+            list(zip([items['items'][1]['link']] * 100, list(range(1, 101))))
+
+        for progress_item in progress_data:
+            self.assertTrue(progress_item in test_progress_data)
 
     def test_bytes_io(self):
         my_bytes_io = BytesIO()
@@ -131,4 +132,7 @@ class TestFetchResizeSave(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+    test = TestFetchResizeSave()
+    test.setUp()
+    test.test_progressbar()
