@@ -132,7 +132,4 @@ class TestFetchResizeSave(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # unittest.main()
-    test = TestFetchResizeSave()
-    test.setUp()
-    test.test_progressbar()
+    unittest.main()
