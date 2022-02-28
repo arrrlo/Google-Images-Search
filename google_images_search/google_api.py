@@ -93,8 +93,17 @@ class GoogleCustomSearch(object):
 
             if self._fetch_resize_save.validate_images:
                 try:
+                    # simulate browser request
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) '
+                                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                                      'Chrome/27.0.1453.94 '
+                                      'Safari/537.36'
+                    }
                     response = requests.head(
-                        image['link'], timeout=5, allow_redirects=False)
+                        image['link'], timeout=5, allow_redirects=False,
+                        headers=headers
+                    )
                     content_length = response.headers.get('Content-Length')
                     content_type = response.headers.get('Content-Type', '')
 
@@ -106,10 +115,12 @@ class GoogleCustomSearch(object):
                         self._fetch_resize_save.set_chunk_size(
                             image['link'], content_length
                         )
+                    else:
+                        continue
                 except requests.exceptions.RequestException:
                     continue
 
-            yield image['link'], image['image']['thumbnailLink']
+            yield image['link'], image['image']['contextLink']
 
 
 class GoogleBackendException(Exception):

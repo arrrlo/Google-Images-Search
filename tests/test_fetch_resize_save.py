@@ -11,13 +11,13 @@ items = {
         {
             'link': 'https://www.gstatic.com/webp/gallery3/1.png',
             'image': {
-                'thumbnailLink': 'https://www.gstatic.com'
+                'contextLink': 'https://www.gstatic.com'
             }
         },
         {
             'link': 'https://www.gstatic.com/webp/gallery3/2.png',
             'image': {
-                'thumbnailLink': 'https://www.gstatic.com'
+                'contextLink': 'https://www.gstatic.com'
             }
         }
     ]
@@ -85,7 +85,7 @@ class TestFetchResizeSave(unittest.TestCase):
         self._frs.search({'num': 2})
         for i, item in enumerate(self._frs.results()):
             self.assertEqual(item.referrer_url,
-                             items['items'][i]['image']['thumbnailLink'])
+                             items['items'][i]['image']['contextLink'])
 
     def test_search_path(self):
         self._frs.search({}, path_to_dir=self._base_dir, width=100, height=100)

@@ -306,7 +306,14 @@ class FetchResizeSave(object):
         :return: raw image data
         """
 
-        with requests.get(url, stream=True) as req:
+        # simulate browser request
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) '
+                          'AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/27.0.1453.94 '
+                          'Safari/537.36'
+        }
+        with requests.get(url, stream=True, headers=headers) as req:
             for chunk in req.iter_content(chunk_size=self._chunk_sizes.get(url)):
 
                 # filter out keep-alive new chunks
