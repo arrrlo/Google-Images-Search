@@ -33,7 +33,6 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -50,7 +49,7 @@ setup(
         'requests~=2.21',
         'Pillow>=8.1.1',
         'python-resize-image~=1.1',
-        'google-api-python-client~=1.7',
+        'google-api-python-client~=2.48.0',
     ],
 
     entry_points={
