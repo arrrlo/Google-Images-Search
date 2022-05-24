@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.3
+
+### Added in 1.4.3  
+-   Travis switched with GitHub Actions
+
+### Fixed in 1.4.2
+
+-   Updated version of google-api-python-client lib
+
 ## 1.4.2
 
 ### Fixed in 1.4.2
