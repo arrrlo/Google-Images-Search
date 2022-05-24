@@ -11,7 +11,7 @@ name: Upload Python Package
 on:
   push:
     branches:
-    - master
+      - master
 
 permissions:
   contents: read
@@ -38,3 +38,4 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_USER_TOKEN }}
+        skip_existing: true
