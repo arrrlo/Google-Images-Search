@@ -50,7 +50,7 @@ setup(
         'requests~=2.21',
         'Pillow>=8.1.1',
         'python-resize-image~=1.1',
-        'google-api-python-client~=1.7',
+        'google-api-python-client~=2.48.0',
     ],
 
     entry_points={
