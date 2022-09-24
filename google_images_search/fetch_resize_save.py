@@ -11,8 +11,6 @@ from .google_api import GoogleCustomSearch
 
 IMAGES_NUM_LIMIT = 10
 
-print("YUH")
-
 class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
@@ -169,7 +167,7 @@ class FetchResizeSave(object):
         :param path_to_dir: path where the images should be downloaded
         :param width: crop width of the images
         :param height: crop height of the images
-        :param custom_image_name: define custom filename
+        :param _custom_image_name: define custom filename
         :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
