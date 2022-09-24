@@ -11,6 +11,7 @@ from .google_api import GoogleCustomSearch
 
 IMAGES_NUM_LIMIT = 10
 
+print("YUH")
 
 class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
@@ -32,7 +33,6 @@ class FetchResizeSave(object):
         self._terminal_lines = {}
         self._search_again = False
         self._download_progress = {}
-        self._custom_image_name = None
         self._report_progress = progressbar_fn
 
         self._set_data()
@@ -80,12 +80,13 @@ class FetchResizeSave(object):
         curses.endwin()
 
     def _set_data(self, search_params=None, path_to_dir=False,
-                  width=None, height=None, cache_discovery=True):
+                  width=None, height=None, custom_image_name=None, cache_discovery=True):
         """Set data for Google api search, save and resize
         :param search_params: parameters for Google API Search
         :param path_to_dir: path where the images should be downloaded
         :param width: crop width of the images
         :param height: crop height of the images
+        :param custom_image_name: define custom filename
         :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
@@ -94,6 +95,7 @@ class FetchResizeSave(object):
         self._height = height
         self._path_to_dir = path_to_dir
         self._search_params = search_params
+        self._custom_image_name = custom_image_name
         self._cache_discovery = cache_discovery
 
     def _get_data(self):
@@ -105,6 +107,7 @@ class FetchResizeSave(object):
                self._path_to_dir, \
                self._width,\
                self._height,\
+               self._custom_image_name, \
                self._cache_discovery
 
     def search(self, search_params, path_to_dir=False, width=None,
@@ -115,16 +118,14 @@ class FetchResizeSave(object):
         :param path_to_dir: path where the images should be downloaded
         :param width: crop width of the images
         :param height: crop height of the images
-        :param cache_discovery: whether or not to cache the discovery doc
         :param custom_image_name: define custom filename
+        :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
 
-        self._custom_image_name = custom_image_name
-
         if not self._search_again:
             self._set_data(
-                search_params, path_to_dir, width, height, cache_discovery
+                search_params, path_to_dir, width, height, custom_image_name, cache_discovery
             )
             self._search_result = []
 
@@ -161,13 +162,14 @@ class FetchResizeSave(object):
         self._search_result = self._search_result[:self._number_of_images]
 
     def _search_images(self, search_params, path_to_dir=False, width=None,
-                       height=None, cache_discovery=False):
+                       height=None, _custom_image_name=None, cache_discovery=False):
         """Fetched images using Google API and does the download and resize
         if path_to_dir and width and height variables are provided.
         :param search_params: parameters for Google API Search
         :param path_to_dir: path where the images should be downloaded
         :param width: crop width of the images
         :param height: crop height of the images
+        :param custom_image_name: define custom filename
         :param cache_discovery: whether or not to cache the discovery doc
         :return: None
         """
