@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.4
+
+### Fixes in 1.4.4  
+-   Dependency version for Click
+
 ## 1.4.3
 
 ### Added in 1.4.3  
