@@ -213,13 +213,13 @@ class FetchResizeSave(object):
         :return: None
         """
 
-        # don't reset data
+        # don't reset the data
         self._search_for_more = True
 
-        # gen new images
+        # get new images
         self.next_page()
 
-        # set for reset
+        # set reset flag
         self._search_for_more = False
 
     def next_page(self):
