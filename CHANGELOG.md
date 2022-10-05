@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.5
+
+### Fixes in 1.4.5  
+-   multiple search with different data without instantiating GIS object again (discovered by [@notchum](https://github.com/notchum))
+
 ## 1.4.4
 
 ### Fixes in 1.4.4  
