@@ -29,8 +29,8 @@ class FetchResizeSave(object):
         self._chunk_sizes = {}
         self.zero_return = False
         self._terminal_lines = {}
-        self._search_again = False
         self._download_progress = {}
+        self._search_for_more = False
         self._report_progress = progressbar_fn
 
         self._set_data()
@@ -121,7 +121,7 @@ class FetchResizeSave(object):
         :return: None
         """
 
-        if not self._search_again:
+        if not self._search_for_more:
             self._set_data(
                 search_params, path_to_dir, width, height, custom_image_name, cache_discovery
             )
@@ -155,7 +155,7 @@ class FetchResizeSave(object):
         else:
             # run search again if validation removed some images
             # and desired number of images haven't been reached
-            self.next_page(search_again=True)
+            self._next_page()
 
         self._search_result = self._search_result[:self._number_of_images]
 
@@ -207,14 +207,28 @@ class FetchResizeSave(object):
             if self._stdscr:
                 curses.endwin()
 
-    def next_page(self, search_again=False):
+    def _next_page(self):
+        """Run search again if validation removed some images
+        and desired number of images haven't been reached
+        :return: None
+        """
+
+        # don't reset the data
+        self._search_for_more = True
+
+        # get new images
+        self.next_page()
+
+        # set reset flag
+        self._search_for_more = False
+
+    def next_page(self):
         """Get next batch of images.
         Number of images is defined with num search parameter.
-        :return: search results
+        :return: None
         """
 
         self._page += 1
-        self._search_again = search_again
         self.search(*self._get_data())
 
     def set_chunk_size(self, url, content_size):
