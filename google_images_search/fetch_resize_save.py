@@ -123,7 +123,8 @@ class FetchResizeSave(object):
 
         if not self._search_for_more:
             self._set_data(
-                search_params, path_to_dir, width, height, custom_image_name, cache_discovery
+                search_params, path_to_dir, width, height, custom_image_name,
+                cache_discovery
             )
             self._search_result = []
 
