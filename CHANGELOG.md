@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.6
+
+### Fixes in 1.4.6  
+-   custom name bug for multiple files (discovered and fixed by [@Hussainity](https://github.com/Hussainity))
+
 ## 1.4.5
 
 ### Fixes in 1.4.5  
