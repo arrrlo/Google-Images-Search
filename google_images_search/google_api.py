@@ -8,7 +8,7 @@ class GoogleCustomSearch(object):
 
     def __init__(self, developer_key=None,
                  custom_search_cx=None,
-                 fetch_resize_save=None):
+                 fetch_resize_save=None, siterestrict=False):
 
         self._developer_key = developer_key or \
                               os.environ.get('GCS_DEVELOPER_KEY')
@@ -17,6 +17,7 @@ class GoogleCustomSearch(object):
 
         self._google_build = None
         self._fetch_resize_save = fetch_resize_save
+        self.siterestrict = siterestrict
 
         self._search_params_keys = {
             'q': None,
@@ -42,11 +43,18 @@ class GoogleCustomSearch(object):
         if not self._google_build:
             self._google_build = discovery.build(
                 "customsearch", "v1",
+                # discoveryServiceUrl="https://www.googleapis.com/discovery/v1/apis/" "{api}/{apiVersion}/rest",
                 developerKey=self._developer_key,
                 cache_discovery=cache_discovery)
+        req = self._google_build.cse().list(
+            cx=self._custom_search_cx, **search_params)
+        if self.siterestrict:
+            req.uri = req.uri.replace('/v1?', '/v1/siterestrict?')
+        return req.execute()
 
-        return self._google_build.cse().list(
-            cx=self._custom_search_cx, **search_params).execute()
+
+        # return self._google_build.cse().list(
+        #     cx=self._custom_search_cx, **search_params).execute()
 
     def _search_params(self, params):
         """Received a dict of params and merges
