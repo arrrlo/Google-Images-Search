@@ -44,7 +44,7 @@ setup(
         'colorama~=0.4',
         'pyfiglet~=0.8',
         'termcolor~=1.1',
-        'click>=7.0<=8.1.*',
+        'click>=7.0, <8.2',
         'six~=1.12',
         'requests~=2.21',
         'Pillow>=8.1.1',
