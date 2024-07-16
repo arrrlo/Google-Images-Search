@@ -393,6 +393,12 @@ class GSImage(object):
 
         self.resized = False
 
+    def __eq__(self, other):
+        return self.url == other.url
+
+    def __hash__(self):
+        return hash(self.url)
+
     @property
     def url(self):
         """Returns the image url
