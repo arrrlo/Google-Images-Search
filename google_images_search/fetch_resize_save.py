@@ -15,11 +15,11 @@ class FetchResizeSave(object):
     """Class with resizing and downloading logic"""
 
     def __init__(self, developer_key, custom_search_cx,
-                 progressbar_fn=None, validate_images=True):
+                 progressbar_fn=None, validate_images=True, siterestrict=False):
 
         # initialise google api
         self._google_custom_search = GoogleCustomSearch(
-            developer_key, custom_search_cx, self)
+            developer_key, custom_search_cx, self, siterestrict)
 
         self._search_result = []
         self.validate_images = validate_images
