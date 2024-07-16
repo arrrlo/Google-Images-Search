@@ -23,9 +23,9 @@ To be able to use this library, you need to enable Google Custom Search API, gen
 
 -   Visit [https://console.developers.google.com/apis/credentials](https://console.developers.google.com/apis/credentials) and generate API key credentials for your project.
 
--   Visit [https://cse.google.com/cse/all](https://cse.google.com/cse/all) and in the web form where you create/edit your custom search engine enable "Image search" option and for "Sites to search" option select "Search the entire web but emphasize included sites".  
+-   Visit [https://cse.google.com/cse/all](https://cse.google.com/cse/all) and in the web form where you create/edit your custom search engine copy your search engine ID under the basics header(Project CX) and enable "Image search" toggle under the search features header.
 
-After setting up your Google developers account and project you should have been provided with developers API key and project CX.
+After setting up your Google developers account and project you should have been provided with developers API key and project CX(search engine ID).
 
 Install package from pypi.org:  
 
